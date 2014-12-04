@@ -2,7 +2,6 @@ package projekt_android.photoeditor;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,6 +21,8 @@ public class MainMenu extends Activity {
     private static final int SELECT_IMAGE_CODE = 1;
     private static final int CAMERA_REQUEST_CODE = 2;
     private String selectedImagePath;
+    private Bitmap selectedImage;
+    public final static String IMAGE_PATH = "projekt_android.photoeditor.IMAGE_PATH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,30 +51,26 @@ public class MainMenu extends Activity {
 
     // METHODS FOR SELECTING A PICTURE
     public void showImageSelectionDialog(View view) {
+        String [] imageSelectionOptions = {"Select from Gallery", "Use the Camera"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Source for the image:")
-                .setItems(R.array.imageSelectionOptionsArray, new DialogInterface.OnClickListener() {
+                .setItems(imageSelectionOptions, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
                         // of the selected item
                         switch (which)
                         {
                             case 0:
-                            // select from memory
+                                selectImageFromMemory();
                                 break;
                             case 1:
-                            // use the camera
+                                selectImageFromCamera();
                                 break;
                         }
                     }
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-    public void selectImageToModify(View view){
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
     @Override
@@ -86,15 +83,20 @@ public class MainMenu extends Activity {
                     Uri selectedImageUri = data.getData();
                     selectedImagePath = getPath(selectedImageUri);
 
-                    Bitmap bitmapImage = BitmapFactory.decodeFile(selectedImagePath);
-                    image.setImageBitmap(bitmapImage);
+                    selectedImage = BitmapFactory.decodeFile(selectedImagePath);
+                    image.setImageBitmap(selectedImage);
                     break;
                 case CAMERA_REQUEST_CODE:
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    image.setImageBitmap(photo);
+                    selectedImage = (Bitmap) data.getExtras().get("data");
+                    image.setImageBitmap(selectedImage);
                     break;
             }
         }
+    }
+
+    private void selectImageFromCamera(){
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
     private void selectImageFromMemory(){
@@ -113,6 +115,13 @@ public class MainMenu extends Activity {
         int columnIndex=cursor.getColumnIndex(filePathColumn[0]);
 
         return cursor.getString(columnIndex);
+    }
+
+    // GO TO NEXT ACTIVITY
+    public void startImageEditing(View view){
+        Intent intent = new Intent(this, SelectContentToAdd.class);
+        intent.putExtra(IMAGE_PATH, selectedImagePath);
+        startActivity(intent);
     }
 
 }

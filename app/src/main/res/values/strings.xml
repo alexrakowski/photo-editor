@@ -2,7 +2,10 @@
 <resources>
 
     <string name="app_name">PhotoEditor</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="select_picture">Tap to select picture</string>
+    <string name="title_activity_select_content_to_add">SelectContentToAdd</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_photo_edition_confirmal">PhotoEditionConfirmal</string>
 
 </resources>
