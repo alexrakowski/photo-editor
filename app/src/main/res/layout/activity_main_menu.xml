@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainMenu"
+    android:background="#ff48abb6">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:weightSum="100">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:onClick="showImageSelectionDialog"
+            android:id="@+id/selectImageImageView"
+            android:background="#8a99aaaf"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:text="Convert!"
+            android:id="@+id/convertButton"
+            android:layout_weight="25"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</RelativeLayout>
