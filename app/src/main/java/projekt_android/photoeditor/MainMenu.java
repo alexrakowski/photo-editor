@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.FaceDetector;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 public class MainMenu extends Activity {
@@ -79,7 +82,7 @@ public class MainMenu extends Activity {
             ImageView image = (ImageView) findViewById(R.id.selectImageImageView);
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            //options.inSampleSize = 8;
+            options.inSampleSize = 8;
 
             switch (requestCode)
             {
@@ -88,10 +91,12 @@ public class MainMenu extends Activity {
                     selectedImagePath = getPath(selectedImageUri);
 
                     selectedImage = BitmapFactory.decodeFile(selectedImagePath, options);
+
                     image.setImageBitmap(selectedImage);
                     break;
                 case CAMERA_REQUEST_CODE:
                     selectedImage = (Bitmap) data.getExtras().get("data");
+                    selectedImage = Utils.rotateBitmap(selectedImage, 90f);
                     image.setImageBitmap(selectedImage);
                     break;
             }
@@ -123,6 +128,13 @@ public class MainMenu extends Activity {
 
     // GO TO NEXT ACTIVITY
     public void startImageEditing(View view){
+        if (FaceEditor.getFacesFromImage(selectedImage) == null){
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getApplicationContext(), "Found no faces on this image", duration);
+            toast.show();
+            return;
+        }
+
         //set the photo to edit
         PhotoEditorApp appContext = ((PhotoEditorApp)getApplicationContext());
         appContext.setPreEditedPhoto(selectedImage);

@@ -25,7 +25,7 @@ public class FaceEditor {
         return edited;
     }
 
-    private static FaceDetector.Face [] getFacesFromImage(Bitmap bmp) {
+    public static FaceDetector.Face [] getFacesFromImage(Bitmap bmp) {
         FaceDetector fd = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MAX_FACES);
         FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
 
@@ -33,7 +33,7 @@ public class FaceEditor {
         int faces_found_count = fd.findFaces(bmp, faces);
 
         //TODO: change the confidence
-        if (faces_found_count > 0 && faces[0].confidence() > 0.25) {
+        if (faces_found_count > 0 ) { //&& faces[0].confidence() > 0.25
             return faces;
         } else {
             return null;
