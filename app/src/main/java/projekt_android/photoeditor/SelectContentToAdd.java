@@ -2,6 +2,7 @@ package projekt_android.photoeditor;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -23,7 +24,7 @@ public class SelectContentToAdd extends Activity {
         setContentView(R.layout.activity_select_content_to_add);
 
         Intent intent = getIntent();
-        selectedImagePath = intent.getStringExtra(MainMenu.IMAGE_PATH);
+        //selectedImagePath = intent.getStringExtra(MainMenu.IMAGE_PATH);
     }
 
 
@@ -56,10 +57,11 @@ public class SelectContentToAdd extends Activity {
         } else {
             selected = false;
         }
+        Resources resources = getResources();
         if(!selected) {
-            view.setBackgroundColor(0xff00cccc);
+            view.setBackgroundColor(resources.getColor(R.color.selected_content_blue));
         } else {
-            view.setBackgroundColor(getResources().getColor(R.color.background_blue));
+            view.setBackgroundColor(resources.getColor(R.color.background_blue));
         }
         view.setTag(new Boolean(!selected));
     }

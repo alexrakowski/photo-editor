@@ -2,6 +2,7 @@ package projekt_android.photoeditor;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,7 +23,6 @@ public class MainMenu extends Activity {
     private static final int CAMERA_REQUEST_CODE = 2;
     private String selectedImagePath;
     private Bitmap selectedImage;
-    public final static String IMAGE_PATH = "projekt_android.photoeditor.IMAGE_PATH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +119,11 @@ public class MainMenu extends Activity {
 
     // GO TO NEXT ACTIVITY
     public void startImageEditing(View view){
+        //set the photo to edit
+        PhotoEditorApp appContext = ((PhotoEditorApp)getApplicationContext());
+        appContext.savePreEditedBitmap(selectedImage);
+
         Intent intent = new Intent(this, SelectContentToAdd.class);
-        intent.putExtra(IMAGE_PATH, selectedImagePath);
         startActivity(intent);
     }
 
