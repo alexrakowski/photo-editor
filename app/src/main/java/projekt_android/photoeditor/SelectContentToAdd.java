@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 
 public class SelectContentToAdd extends Activity {
@@ -28,7 +30,7 @@ public class SelectContentToAdd extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.select_content_to_add, menu);
+        // getMenuInflater().inflate(R.menu.select_content_to_add, menu);
         return true;
     }
 
@@ -42,6 +44,24 @@ public class SelectContentToAdd extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // SELECT CONTENT
+    public void imageClick(View view) {
+        ImageView image = (ImageView) view;
+        boolean selected;
+        Object tag = image.getTag();
+        if(tag != null) {
+             selected = (Boolean) tag;
+        } else {
+            selected = false;
+        }
+        if(!selected) {
+            view.setBackgroundColor(0xff00cccc);
+        } else {
+            view.setBackgroundColor(getResources().getColor(R.color.background_blue));
+        }
+        view.setTag(new Boolean(!selected));
     }
 
     // GO TO NEXT ACTIVITY

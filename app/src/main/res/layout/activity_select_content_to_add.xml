@@ -18,6 +18,143 @@
         android:layout_alignParentStart="true"
         android:weightSum="100">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Glasses:"/>
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/glassesplain1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/glassessun1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/glassessun2"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Moustaches:"/>
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/moustache1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/moustache2"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/moustache3"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Hats:"/>
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/hat1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/hat2"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:onClick="imageClick"
+                    android:src="@drawable/hat3"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

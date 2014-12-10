@@ -28,7 +28,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:onClick="showImageSelectionDialog"
                 android:id="@+id/editedImageImageView"
                 android:background="@color/image_background"/>
         </FrameLayout>
