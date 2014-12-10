@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -54,15 +55,14 @@ public class MainMenu extends Activity {
 
     // METHODS FOR SELECTING A PICTURE
     public void showImageSelectionDialog(View view) {
-        String [] imageSelectionOptions = {"Select from Gallery", "Use the Camera"};
+        String[] imageSelectionOptions = {"Select from Gallery", "Use the Camera"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Source for the image:")
                 .setItems(imageSelectionOptions, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
                         // of the selected item
-                        switch (which)
-                        {
+                        switch (which) {
                             case 0:
                                 selectImageFromMemory();
                                 break;
@@ -79,36 +79,36 @@ public class MainMenu extends Activity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            ImageView image = (ImageView) findViewById(R.id.selectImageImageView);
+            ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;
+            //BitmapFactory.Options options = new BitmapFactory.Options();
+            //options.inSampleSize = 8;
 
-            switch (requestCode)
-            {
+            switch (requestCode) {
                 case SELECT_IMAGE_CODE:
                     Uri selectedImageUri = data.getData();
                     selectedImagePath = getPath(selectedImageUri);
 
-                    selectedImage = BitmapFactory.decodeFile(selectedImagePath, options);
+                    selectedImage = Utils.decodeSampledBitmapFromFile(selectedImagePath, imageView.getWidth(), imageView.getHeight());
+                    selectedImage = Utils.fixRotation(selectedImagePath, selectedImage);
 
-                    image.setImageBitmap(selectedImage);
+                    imageView.setImageBitmap(selectedImage);
                     break;
                 case CAMERA_REQUEST_CODE:
                     selectedImage = (Bitmap) data.getExtras().get("data");
                     selectedImage = Utils.rotateBitmap(selectedImage, 90f);
-                    image.setImageBitmap(selectedImage);
+                    imageView.setImageBitmap(selectedImage);
                     break;
             }
         }
     }
 
-    private void selectImageFromCamera(){
+    private void selectImageFromCamera() {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
-    private void selectImageFromMemory(){
+    private void selectImageFromMemory() {
         Intent gallery = new Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -116,19 +116,19 @@ public class MainMenu extends Activity {
     }
 
     // helper method
-    private String getPath(Uri uri){
-        String[] filePathColumn={MediaStore.Images.Media.DATA};
+    private String getPath(Uri uri) {
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-        Cursor cursor=getContentResolver().query(uri, filePathColumn, null, null, null);
+        Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
         cursor.moveToFirst();
-        int columnIndex=cursor.getColumnIndex(filePathColumn[0]);
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 
         return cursor.getString(columnIndex);
     }
 
     // GO TO NEXT ACTIVITY
-    public void startImageEditing(View view){
-        if (FaceEditor.getFacesFromImage(selectedImage) == null){
+    public void startImageEditing(View view) {
+        if (FaceEditor.getFacesFromImage(selectedImage) == null) {
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(getApplicationContext(), "Found no faces on this image", duration);
             toast.show();
@@ -136,14 +136,14 @@ public class MainMenu extends Activity {
         }
 
         //set the photo to edit
-        PhotoEditorApp appContext = ((PhotoEditorApp)getApplicationContext());
+        PhotoEditorApp appContext = ((PhotoEditorApp) getApplicationContext());
         appContext.setPreEditedPhoto(selectedImage);
 
         Intent intent = new Intent(this, SelectContentToAdd.class);
         startActivity(intent);
     }
 
-    public void showGallery(View view){
+    public void showGallery(View view) {
         Intent intent = new Intent(this, Gallery.class);
         startActivity(intent);
     }
