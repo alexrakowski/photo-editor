@@ -36,8 +36,12 @@ public class SelectContentToAdd extends Activity {
 
     public void editPhoto(){
         PhotoEditorApp photoEditorApp = (PhotoEditorApp)getApplicationContext();
-        // TODO: CHANGE THIS!!!
-        photoEditorApp.setEditedPhoto(photoEditorApp.getPreEditedPhoto());
+        Bitmap photoToEdit = photoEditorApp.getPreEditedPhoto();
+        Bitmap moustache = BitmapFactory.decodeResource(getResources(), R.drawable.def_moustache);
+
+        Bitmap editedBitmap = FaceEditor.editBitmap(photoToEdit, moustache);
+
+        photoEditorApp.setEditedPhoto(editedBitmap);
     }
 
     // GO TO NEXT ACTIVITY

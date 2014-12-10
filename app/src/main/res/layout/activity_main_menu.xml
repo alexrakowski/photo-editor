@@ -57,5 +57,12 @@
             android:layout_height="1dp"
             style="@style/Divider"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Gallery"
+            android:id="@+id/showGalleryButton"
+            android:onClick="showGallery"/>
+
     </LinearLayout>
 </RelativeLayout>
