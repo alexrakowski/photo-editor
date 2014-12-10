@@ -5,15 +5,28 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Alek on 2014-12-10.
  */
 public class PhotoEditorApp extends Application {
+    private final static String albumName = "PhotoEditor";
+
     private Bitmap preEditedPhoto;
+    private Bitmap editedPhoto;
+
+    public Bitmap getEditedPhoto() {
+        return editedPhoto;
+    }
+    public void setEditedPhoto(Bitmap editedPhoto) {
+        this.editedPhoto = editedPhoto;
+    }
 
     public Bitmap getPreEditedPhoto() {
         return preEditedPhoto;
@@ -44,8 +57,61 @@ public class PhotoEditorApp extends Application {
         return directory.getAbsolutePath();
     }
 
-    public void savePreEditedBitmap(Bitmap bitmap){
-        setPreEditedPhoto(bitmap);
-        saveBitmapToInternalStorage(preEditedPhoto, "photo_to_edit");
+    public String saveBitmapFile(Bitmap bitmap, String filename){
+        String path;
+        if(isExternalStorageWritable()){
+            File album = getAlbumStorageDir(getApplicationContext(), albumName);
+            path = saveBitmapToExternalStorage(bitmap, filename, album);
+        }else{
+            Log.d("DEBUG", "external storage not writeable");
+            return null;
+        }
+        return path;
+    }
+
+    private File getAlbumStorageDir(Context context, String albumName) {
+        // Get the directory for the app's private pictures directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), albumName);
+        if (!file.isDirectory()) {
+            //first check if directory is not already created
+            if (!file.mkdirs()) {
+                Log.e("<DEBUG>", "Directory not created");
+            }
+        }
+        return file;
+    }
+
+    private boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    private String saveBitmapToExternalStorage(Bitmap bitmap, String filename, File storagePath){
+        String result = null;
+        FileOutputStream out = null;
+        File bitmapFile = new File(storagePath, filename);
+
+        try {
+            out = new FileOutputStream(bitmapFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            // PNG is a lossless format, the compression factor (100) is ignored
+            result = bitmapFile.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 }

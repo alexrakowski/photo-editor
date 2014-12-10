@@ -7,5 +7,7 @@
     <string name="title_activity_select_content_to_add">SelectContentToAdd</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_photo_edition_confirmal">PhotoEditionConfirmal</string>
+    <string name="saved_photo_description">PhotoEditor</string>
+    <string name="app_folder_name">PhotoEditor</string>
 
 </resources>
