@@ -77,13 +77,17 @@ public class MainMenu extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             ImageView image = (ImageView) findViewById(R.id.selectImageImageView);
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            //options.inSampleSize = 8;
+
             switch (requestCode)
             {
                 case SELECT_IMAGE_CODE:
                     Uri selectedImageUri = data.getData();
                     selectedImagePath = getPath(selectedImageUri);
 
-                    selectedImage = BitmapFactory.decodeFile(selectedImagePath);
+                    selectedImage = BitmapFactory.decodeFile(selectedImagePath, options);
                     image.setImageBitmap(selectedImage);
                     break;
                 case CAMERA_REQUEST_CODE:
@@ -121,7 +125,7 @@ public class MainMenu extends Activity {
     public void startImageEditing(View view){
         //set the photo to edit
         PhotoEditorApp appContext = ((PhotoEditorApp)getApplicationContext());
-        appContext.savePreEditedBitmap(selectedImage);
+        appContext.setPreEditedPhoto(selectedImage);
 
         Intent intent = new Intent(this, SelectContentToAdd.class);
         startActivity(intent);

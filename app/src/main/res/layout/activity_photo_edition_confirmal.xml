@@ -37,7 +37,8 @@
             android:layout_height="0dp"
             android:text="Save this Photo"
             android:id="@+id/saveEditedPhotoButton"
-            android:layout_weight="16.28" />
+            android:layout_weight="16.28"
+            android:onClick="saveEditedPhoto"/>
 
     </LinearLayout>
 
