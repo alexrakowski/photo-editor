@@ -37,11 +37,32 @@ public class SelectContentToAdd extends Activity {
     public void editPhoto(){
         PhotoEditorApp photoEditorApp = (PhotoEditorApp)getApplicationContext();
         Bitmap photoToEdit = photoEditorApp.getPreEditedPhoto();
-        Bitmap moustache = BitmapFactory.decodeResource(getResources(), R.drawable.def_moustache);
+        Bitmap [] moustaches = getSelectedMoustaches();
+        Bitmap [] hats = getSelectedHats();
+        Bitmap [] glasses = getSelectedGlasses();
 
-        Bitmap editedBitmap = FaceEditor.editBitmap(photoToEdit, moustache);
+        Bitmap editedBitmap = FaceEditor.editBitmap(photoToEdit, moustaches, hats, glasses);
 
         photoEditorApp.setEditedPhoto(editedBitmap);
+    }
+
+    private Bitmap[] getSelectedMoustaches(){
+        Bitmap [] moustaches = new Bitmap[1];
+        moustaches[0] = BitmapFactory.decodeResource(getResources(), R.drawable.moustache1);
+        //TODO
+        return moustaches;
+    }
+    private Bitmap[] getSelectedGlasses(){
+        Bitmap [] glasses = new Bitmap[1];
+        glasses[0] = BitmapFactory.decodeResource(getResources(), R.drawable.glassesplain1);
+        //TODO
+        return glasses;
+    }
+    private Bitmap[] getSelectedHats(){
+        Bitmap [] hats = new Bitmap[1];
+        hats[0] = BitmapFactory.decodeResource(getResources(), R.drawable.hat1);
+        //TODO
+        return hats;
     }
 
     // GO TO NEXT ACTIVITY
