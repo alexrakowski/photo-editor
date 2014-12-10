@@ -131,4 +131,9 @@ public class MainMenu extends Activity {
         startActivity(intent);
     }
 
+    public void showGallery(View view){
+        Intent intent = new Intent(this, Gallery.class);
+        startActivity(intent);
+    }
+
 }
