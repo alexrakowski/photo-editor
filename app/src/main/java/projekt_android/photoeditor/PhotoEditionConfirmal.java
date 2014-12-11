@@ -16,9 +16,14 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import projekt_android.photoeditor.database.GalleryDataSource;
+import projekt_android.photoeditor.database.ImageDataSource;
+
 
 public class PhotoEditionConfirmal extends Activity {
     private Bitmap editedImage;
+
+    private GalleryDataSource dataSource;
 
     /**
      * adds the edited photo to Gallery, and saves to internal storage
@@ -33,6 +38,7 @@ public class PhotoEditionConfirmal extends Activity {
         {
             scanMedia(filename);
             resultMessage = "Successfully saved the photo (" + filename +")";
+            dataSource.addImage(filename);
         }else
         {
             resultMessage = "Failed to save the photo";
@@ -69,6 +75,15 @@ public class PhotoEditionConfirmal extends Activity {
 
         ImageView imageView = (ImageView) findViewById(R.id.editedImageImageView);
         imageView.setImageBitmap(editedImage);
+
+        dataSource = new GalleryDataSource(getApplication());
+        dataSource.open();
+    }
+
+    @Override
+    protected  void onDestroy(){
+        super.onDestroy();
+        dataSource.close();
     }
 
 

@@ -1,11 +1,15 @@
 package projekt_android.photoeditor;
 
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 public class Utils {
     public static void showSimpleDialog(Context context, String text) {
@@ -84,5 +88,15 @@ public class Utils {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(path, options);
+    }
+
+    public static String getPath(Uri uri, ContentResolver resolver) {
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = resolver.query(uri, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+
+        return cursor.getString(columnIndex);
     }
 }

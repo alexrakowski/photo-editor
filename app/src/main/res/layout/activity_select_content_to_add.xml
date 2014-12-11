@@ -18,11 +18,27 @@
         android:layout_alignParentStart="true"
         android:weightSum="100">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="Glasses:"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Glasses:"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/addGlassesButton"
+                android:onClick="addGlasses"/>
+
+        </LinearLayout>
+
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -30,31 +46,32 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/glassesLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/glassesplain1"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/glassessun1"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/glassessun2"/>
@@ -63,12 +80,26 @@
 
         </HorizontalScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Moustaches:"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Moustaches:"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/addMoustachesButton"
+                android:onClick="addMoustaches"/>
+
+        </LinearLayout>
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -76,31 +107,32 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/moustachesLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/moustache1"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/moustache2"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/moustache3"/>
@@ -109,12 +141,26 @@
 
         </HorizontalScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Hats:"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Hats:"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/addHatsButton"
+                android:onClick="addHats"/>
+
+        </LinearLayout>
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -122,13 +168,14 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/hatsLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/hat1"/>
@@ -137,7 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/hat2"/>
@@ -146,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:adjustViewBounds="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="8dp"
                     android:padding="4dp"
                     android:onClick="imageClick"
                     android:src="@drawable/hat3"/>

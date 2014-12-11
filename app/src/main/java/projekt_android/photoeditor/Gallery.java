@@ -1,17 +1,44 @@
 package projekt_android.photoeditor;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
+import android.widget.ImageView;
+
+import java.io.File;
+import java.util.List;
+
+import projekt_android.photoeditor.database.GalleryDataSource;
 
 
 public class Gallery extends Activity {
+
+    GalleryDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+
+        dataSource = new GalleryDataSource(getApplication());
+        dataSource.open();
+
+        Log.i(Gallery.class.getName(), "Trying to get all saved urls from database");
+        List<String> urls = dataSource.getAllUrls();
+        Log.i(Gallery.class.getName(), "Urls obtained");
+        GridView grid = (GridView)findViewById(R.id.galleryGridView);
+        grid.setAdapter(new GalleryImageAdapter(urls, this));
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        dataSource.close();
     }
 
 
