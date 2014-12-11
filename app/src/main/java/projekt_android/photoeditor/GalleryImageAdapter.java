@@ -21,17 +21,29 @@ public class GalleryImageAdapter extends BaseAdapter {
 
     private List<String> urls;
     private Context context;
-    private static int cellWidth = 130;
+    private static int cellWidth;
+
+    public GalleryImageAdapter(List<String> urls, Context context, int width) {
+        filterAndSetUrls(urls);
+        this.context = context;
+        this.cellWidth = width;
+    }
 
     public GalleryImageAdapter(List<String> urls, Context context) {
+        filterAndSetUrls(urls);
+        this.context = context;
+    }
+
+    private void filterAndSetUrls(List<String> nonFilteredUrls){
         this.urls = new ArrayList<String>();
-        for (int i=0; i<urls.size(); i++){
-            File imageFile = new File(urls.get(i));
+
+        //filter out not found files
+        for (int i=0; i<nonFilteredUrls.size(); i++){
+            File imageFile = new File(nonFilteredUrls.get(i));
             if (imageFile.exists()) {
-                this.urls.add(urls.get(i));
+                this.urls.add(nonFilteredUrls.get(i));
             }
         }
-        this.context = context;
     }
 
     @Override
@@ -55,10 +67,8 @@ public class GalleryImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (view == null) {
             imageView = new ImageView(context);
-
-            imageView.setLayoutParams(new GridView.LayoutParams(cellWidth -8, cellWidth -8));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setAdjustViewBounds(true);
         } else {
             imageView = (ImageView) view;
         }
@@ -66,10 +76,7 @@ public class GalleryImageAdapter extends BaseAdapter {
         File imageFile = new File(url);
         if (imageFile.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            //bitmap = Bitmap.createScaledBitmap(bitmap, cellWidth -8, cellWidth -8, true);
             imageView.setImageBitmap(bitmap);
-        } else {
-            //urls.remove(i);
         }
         imageView.setOnClickListener(new OnImageClickListener(url));
         return imageView;

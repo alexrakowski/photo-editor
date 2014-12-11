@@ -37,7 +37,6 @@
         <activity
             android:name=".Gallery"
             android:label="@string/title_activity_gallery"
-            android:parentActivityName=".MainMenu"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

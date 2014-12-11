@@ -43,7 +43,7 @@ public class PhotoEditorApp extends Application {
         // Create imageDir
         File mypath = new File(directory, filename + ".jpg");
 
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try {
 
             fos = new FileOutputStream(mypath);

@@ -9,26 +9,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="projekt_android.photoeditor.Gallery">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:weightSum="100">
-
-
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:horizontalSpacing="10dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp"
-            android:id="@+id/galleryGridView"
-            android:background="@color/image_background"
-            android:numColumns="3" />
-
-    </LinearLayout>
+    <GridView
+        android:id="@+id/galleryGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/image_background"
+        android:columnWidth="40dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
+        />
 </RelativeLayout>
