@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -68,21 +69,85 @@ public class SelectContentToAdd extends Activity {
     }
 
     private Bitmap[] getSelectedMoustaches(){
-        Bitmap [] moustaches = new Bitmap[1];
-        moustaches[0] = BitmapFactory.decodeResource(getResources(), R.drawable.moustache1);
-        //TODO
+        LinearLayout moustachesRow = (LinearLayout) findViewById(R.id.moustachesLayout);
+
+        int selectedCount = 0;
+        for(int i=0; i<moustachesRow.getChildCount(); i++) {
+            ImageView child = (ImageView)moustachesRow.getChildAt(i);
+            Object tag = child.getTag();
+            if (tag != null && (Boolean)tag){
+                selectedCount++;
+            }
+        }
+
+        Bitmap [] moustaches = new Bitmap[selectedCount];
+        if (selectedCount == 0)
+            return null;
+
+        selectedCount=0;
+
+        for(int i=0; i<moustachesRow.getChildCount(); i++) {
+            ImageView child = (ImageView)moustachesRow.getChildAt(i);
+            Object tag = child.getTag();
+            if (tag != null && (Boolean)tag){
+                moustaches[selectedCount] = ((BitmapDrawable)child.getDrawable()).getBitmap();
+                selectedCount++;
+            }
+        }
         return moustaches;
     }
     private Bitmap[] getSelectedGlasses(){
-        Bitmap [] glasses = new Bitmap[1];
-        glasses[0] = BitmapFactory.decodeResource(getResources(), R.drawable.glassesplain1);
-        //TODO
+        LinearLayout glassesRow = (LinearLayout) findViewById(R.id.glassesLayout);
+
+        int selectedCount = 0;
+        for(int i=0; i<glassesRow.getChildCount(); i++) {
+            ImageView child = (ImageView)glassesRow.getChildAt(i);
+            Object tag = child.getTag();
+            if (tag != null && (Boolean)tag){
+                selectedCount++;
+            }
+        }
+
+        Bitmap [] glasses = new Bitmap[selectedCount];
+        if (selectedCount == 0)
+            return null;
+        selectedCount=0;
+
+        for(int i=0; i<glassesRow.getChildCount(); i++) {
+            ImageView child = (ImageView)glassesRow.getChildAt(i);
+            Object tag = child.getTag();
+            if (tag != null && (Boolean)tag){
+                glasses[selectedCount] = ((BitmapDrawable)child.getDrawable()).getBitmap();
+                selectedCount++;
+            }
+        }
         return glasses;
     }
     private Bitmap[] getSelectedHats(){
-        Bitmap [] hats = new Bitmap[1];
-        hats[0] = BitmapFactory.decodeResource(getResources(), R.drawable.hat1);
-        //TODO
+        LinearLayout hatsRow = (LinearLayout) findViewById(R.id.hatsLayout);
+
+        int selectedCount = 0;
+        for(int i=0; i<hatsRow.getChildCount(); i++) {
+            ImageView child = (ImageView)hatsRow.getChildAt(i);
+            Object tag = child.getTag();
+            if (tag != null && (Boolean)tag){
+                selectedCount++;
+            }
+        }
+        if(selectedCount == 0)
+            return null;
+
+        Bitmap [] hats = new Bitmap[selectedCount];
+        selectedCount=0;
+
+        for(int i=0; i<hatsRow.getChildCount(); i++) {
+            ImageView child = (ImageView)hatsRow.getChildAt(i);
+            Object tag = child.getTag();
+            if (tag != null && (Boolean)tag){
+                hats[selectedCount] = ((BitmapDrawable)child.getDrawable()).getBitmap();
+                selectedCount++;
+            }
+        }
         return hats;
     }
 
@@ -189,7 +254,6 @@ public class SelectContentToAdd extends Activity {
         for(String url : glassesUrls) {
             addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout));
         }
-
     }
 
     @Override

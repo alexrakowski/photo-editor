@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -100,6 +101,9 @@ public class MainMenu extends Activity {
                     imageView.setImageBitmap(selectedImage);
                     break;
             }
+            Boolean is_image_selected = selectedImage != null;
+            Button startButton = (Button) findViewById(R.id.convertButton);
+            startButton.setEnabled(is_image_selected);
         }
     }
 
@@ -117,19 +121,21 @@ public class MainMenu extends Activity {
 
     // GO TO NEXT ACTIVITY
     public void startImageEditing(View view) {
-        if (FaceEditor.getFacesFromImage(selectedImage) == null) {
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(getApplicationContext(), "Found no faces on this image", duration);
-            toast.show();
-           //return;
+        if (selectedImage == null){
+            Utils.showShortToast(getApplicationContext(), "Please choose an image");
+        }else {
+            if (FaceEditor.getFacesFromImage(selectedImage) == null) {
+                Utils.showShortToast(getApplicationContext(), "Found no faces on this image");
+            } else {
+
+                //set the photo to edit
+                PhotoEditorApp appContext = ((PhotoEditorApp) getApplicationContext());
+                appContext.setPreEditedPhoto(selectedImage);
+
+                Intent intent = new Intent(this, SelectContentToAdd.class);
+                startActivity(intent);
+            }
         }
-
-        //set the photo to edit
-        PhotoEditorApp appContext = ((PhotoEditorApp) getApplicationContext());
-        appContext.setPreEditedPhoto(selectedImage);
-
-        Intent intent = new Intent(this, SelectContentToAdd.class);
-        startActivity(intent);
     }
 
     public void showGallery(View view) {

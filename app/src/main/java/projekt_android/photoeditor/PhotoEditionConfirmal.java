@@ -44,9 +44,7 @@ public class PhotoEditionConfirmal extends Activity {
             resultMessage = "Failed to save the photo";
         }
 
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(getApplicationContext(), resultMessage, duration);
-        toast.show();
+        Utils.showShortToast(getApplicationContext(), resultMessage);
     }
 
     private String getTimeStampFileName(){
@@ -104,45 +102,5 @@ public class PhotoEditionConfirmal extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    //not used
-
-    private void addFileToGallery(String filename, String photoName){
-        String description = getString(R.string.saved_photo_description);
-        String savedImage, resultMessage;
-        try {
-            savedImage = MediaStore.Images.Media.insertImage(getContentResolver(), filename, photoName, description);
-        }
-        catch (Exception e)
-        {
-            resultMessage = "Failed to add the photo to the gallery";
-            Utils.showSimpleDialog(this, resultMessage);
-            e.printStackTrace();
-            return;
-        }
-        resultMessage = "Successfully added the photo (" + savedImage +") to the gallery";
-
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(getApplicationContext(), resultMessage, duration);
-        toast.show();
-    }
-
-    private void addBitmapToGallery(){
-        String description = getString(R.string.saved_photo_description);
-        String savedImage = MediaStore.Images.Media.insertImage(getContentResolver(), editedImage, getTimeStampFileName(), description);
-        String resultMessage;
-
-        if (savedImage != null){
-            resultMessage = "Successfully saved the photo (" + savedImage +")";
-
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(getApplicationContext(), resultMessage, duration);
-            toast.show();
-        }else{
-            resultMessage = "Failed to save the photo";
-            Utils.showSimpleDialog(this, resultMessage);
-        }
     }
 }

@@ -10,8 +10,15 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 public class Utils {
+    public static void showShortToast(Context context, String text){
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
     public static void showSimpleDialog(Context context, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(text);

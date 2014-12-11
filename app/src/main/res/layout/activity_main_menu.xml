@@ -46,7 +46,8 @@
             android:layout_weight="25"
             android:textStyle="bold"
             android:textSize="40sp"
-            android:onClick="startImageEditing"/>
+            android:onClick="startImageEditing"
+            android:clickable="false"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -54,14 +54,18 @@ public class FaceEditor {
 
         for (FaceDetector.Face face : faces) {
             if (face != null) {
-                moustacheBitmap = moustaches[new Random().nextInt(moustaches.length)];
-                faceWithContent = addMoustache(faceWithContent, moustacheBitmap, face);
-
-                hatBitmap = hats[new Random().nextInt(hats.length)];
-                faceWithContent = addHat(faceWithContent, hatBitmap, face);
-
-                glassesBitmap = glasses[new Random().nextInt(glasses.length)];
-                faceWithContent = addGlasses(faceWithContent, glassesBitmap, face);
+                if (moustaches != null) {
+                    moustacheBitmap = moustaches[new Random().nextInt(moustaches.length)];
+                    faceWithContent = addMoustache(faceWithContent, moustacheBitmap, face);
+                }
+                if (hats != null) {
+                    hatBitmap = hats[new Random().nextInt(hats.length)];
+                    faceWithContent = addHat(faceWithContent, hatBitmap, face);
+                }
+                if (glasses != null) {
+                    glassesBitmap = glasses[new Random().nextInt(glasses.length)];
+                    faceWithContent = addGlasses(faceWithContent, glassesBitmap, face);
+                }
             }
         }
 

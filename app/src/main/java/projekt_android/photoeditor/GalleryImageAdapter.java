@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,13 @@ public class GalleryImageAdapter extends BaseAdapter {
     private Context context;
 
     public GalleryImageAdapter(List<String> urls, Context context) {
-        this.urls = urls;
+        this.urls = new ArrayList<String>();
+        for (int i=0; i<urls.size(); i++){
+            File imageFile = new File(urls.get(i));
+            if (imageFile.exists()) {
+                this.urls.add(urls.get(i));
+            }
+        }
         this.context = context;
     }
 
@@ -55,7 +62,7 @@ public class GalleryImageAdapter extends BaseAdapter {
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             imageView.setImageBitmap(bitmap);
         } else {
-            urls.remove(i);
+            //urls.remove(i);
         }
         return imageView;
 
