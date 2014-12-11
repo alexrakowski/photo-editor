@@ -82,9 +82,6 @@ public class MainMenu extends Activity {
         if (resultCode == RESULT_OK) {
             ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
 
-            //BitmapFactory.Options options = new BitmapFactory.Options();
-            //options.inSampleSize = 8;
-
             switch (requestCode) {
                 case SELECT_IMAGE_CODE:
                     Uri selectedImageUri = data.getData();
@@ -101,9 +98,6 @@ public class MainMenu extends Activity {
                     imageView.setImageBitmap(selectedImage);
                     break;
             }
-            Boolean is_image_selected = selectedImage != null;
-            Button startButton = (Button) findViewById(R.id.convertButton);
-            startButton.setEnabled(is_image_selected);
         }
     }
 

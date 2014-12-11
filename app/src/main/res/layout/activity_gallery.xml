@@ -22,13 +22,13 @@
         <GridView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="90dp"
             android:gravity="center"
             android:horizontalSpacing="10dp"
-            android:numColumns="auto_fit"
             android:stretchMode="columnWidth"
             android:verticalSpacing="10dp"
-            android:id="@+id/galleryGridView" />
+            android:id="@+id/galleryGridView"
+            android:background="@color/image_background"
+            android:numColumns="3" />
 
     </LinearLayout>
 </RelativeLayout>

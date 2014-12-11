@@ -254,6 +254,12 @@ public class SelectContentToAdd extends Activity {
         for(String url : glassesUrls) {
             addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout));
         }
+        for(String url : hatsUrls) {
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout));
+        }
+        for(String url : moustachesUrls) {
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout));
+        }
     }
 
     @Override

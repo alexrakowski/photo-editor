@@ -10,5 +10,6 @@
     <string name="saved_photo_description">PhotoEditor</string>
     <string name="app_folder_name">PhotoEditor</string>
     <string name="title_activity_gallery">Gallery</string>
+    <string name="title_activity_zoom_photo">ZoomPhoto</string>
 
 </resources>
