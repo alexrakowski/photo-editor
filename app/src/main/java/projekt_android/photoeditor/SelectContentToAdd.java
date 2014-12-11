@@ -94,10 +94,12 @@ public class SelectContentToAdd extends Activity {
 
     public void addMoustaches (View view) {
         Log.i(SelectContentToAdd.class.getName(), "Adding moustaches");
+        selectImageFromMemory(SELECT_MOUSTACHES_CODE);
     }
 
     public void addHats(View view) {
         Log.i(SelectContentToAdd.class.getName(), "Adding hats");
+        selectImageFromMemory(SELECT_HATS_CODE);
     }
 
     public void addImgToLayout (String url, LinearLayout layout) {
@@ -138,6 +140,20 @@ public class SelectContentToAdd extends Activity {
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     glassesSource.addImage(selectedImagePath);
                     addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.glassesLayout));
+                    break;
+                }
+                case(SELECT_MOUSTACHES_CODE) : {
+                    Uri selectedImageUri = data.getData();
+                    String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
+                    moustachesSource.addImage(selectedImagePath);
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.moustachesLayout));
+                    break;
+                }
+                case(SELECT_HATS_CODE) : {
+                    Uri selectedImageUri = data.getData();
+                    String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
+                    hatsSource.addImage(selectedImagePath);
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.hatsLayout));
                     break;
                 }
             }
