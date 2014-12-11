@@ -31,7 +31,6 @@ public class Gallery extends Activity {
         Log.i(Gallery.class.getName(), "Trying to get all saved urls from database");
         List<String> urls = dataSource.getAllUrls();
         Log.i(Gallery.class.getName(), "Urls obtained");
-        Log.i(Gallery.class.getName(), urls.get(0).toString());
         GridView grid = (GridView)findViewById(R.id.galleryGridView);
         grid.setAdapter(new GalleryImageAdapter(urls, this));
     }

@@ -26,6 +26,7 @@ public class GalleryImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if(urls == null) return 0;
         return urls.size();
     }
 
