@@ -1,6 +1,7 @@
 package projekt_android.photoeditor.database;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -10,15 +11,14 @@ import java.util.List;
 /**
  * Created by Piotrek on 2014-12-10.
  */
-public class ImageDataSource {
+public abstract class ImageDataSource {
 
-    private ImageSQLHelper helper;
-    private SQLiteDatabase database;
-    private String[] allColumns;
+    protected ImageSQLHelper helper;
+    protected SQLiteDatabase database;
+    protected String[] allColumns;
 
-    public ImageDataSource(ImageSQLHelper helper) {
-        this.helper = helper;
-        this.allColumns = new String[] {helper.getIdColumnName(), helper.getImageColumnName()};
+    public ImageDataSource(Context context) {
+        this.helper = new ImageSQLHelper(context);
     }
 
     public void open() {
@@ -29,16 +29,20 @@ public class ImageDataSource {
         helper.close();
     }
 
+    public abstract String getImageColumnName();
+
+    public abstract String getTableName();
+
     public void addImage(String url) {
         ContentValues values = new ContentValues();
-        values.put(helper.getImageColumnName(), url);
-        database.insert(helper.getTableName(), null, values);
+        values.put(this.getImageColumnName(), url);
+        database.insert(this.getTableName(), null, values);
     }
 
     public List<String> getAllUrls() {
         List<String> urls = new ArrayList<String>();
 
-        Cursor cursor = database.query(helper.getTableName(), allColumns, null, null, null, null, null);
+        Cursor cursor = database.query(this.getTableName(), allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
