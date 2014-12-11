@@ -87,7 +87,7 @@ public class MainMenu extends Activity {
             switch (requestCode) {
                 case SELECT_IMAGE_CODE:
                     Uri selectedImageUri = data.getData();
-                    selectedImagePath = getPath(selectedImageUri);
+                    selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
 
                     selectedImage = Utils.decodeSampledBitmapFromFile(selectedImagePath, imageView.getWidth(), imageView.getHeight());
                     selectedImage = Utils.fixRotation(selectedImagePath, selectedImage);
@@ -115,24 +115,13 @@ public class MainMenu extends Activity {
         startActivityForResult(gallery, SELECT_IMAGE_CODE);
     }
 
-    // helper method
-    private String getPath(Uri uri) {
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-
-        return cursor.getString(columnIndex);
-    }
-
     // GO TO NEXT ACTIVITY
     public void startImageEditing(View view) {
         if (FaceEditor.getFacesFromImage(selectedImage) == null) {
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(getApplicationContext(), "Found no faces on this image", duration);
             toast.show();
-            return;
+           //return;
         }
 
         //set the photo to edit
