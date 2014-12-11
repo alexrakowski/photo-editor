@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,19 +36,20 @@ public abstract class ImageDataSource {
 
     public void addImage(String url) {
         ContentValues values = new ContentValues();
-        values.put(this.getImageColumnName(), url);
-        database.insert(this.getTableName(), null, values);
+        values.put(getImageColumnName(), url);
+        database.insert(getTableName(), null, values);
     }
 
     public List<String> getAllUrls() {
         List<String> urls = new ArrayList<String>();
 
-        Cursor cursor = database.query(this.getTableName(), allColumns, null, null, null, null, null);
+        Cursor cursor = database.query(getTableName(), allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             String url = cursor.getString(1);
             urls.add(url);
+            cursor.moveToNext();
         }
 
         return urls;
