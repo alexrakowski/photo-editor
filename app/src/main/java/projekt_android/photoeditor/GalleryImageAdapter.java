@@ -42,7 +42,7 @@ public class GalleryImageAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ImageView imageView;
-        if(view == null){
+        if (view == null) {
             imageView = new ImageView(context);
             // maybe set some more imageView params for gridlayout
         } else {
@@ -50,9 +50,14 @@ public class GalleryImageAdapter extends BaseAdapter {
         }
         String url = urls.get(i);
         File imageFile = new File(url);
-        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-        imageView.setImageBitmap(bitmap);
+        if (imageFile.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            imageView.setImageBitmap(bitmap);
+        } else {
+            urls.remove(i);
+        }
         return imageView;
+
     }
 }
 
