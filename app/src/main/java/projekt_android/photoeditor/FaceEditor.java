@@ -113,7 +113,7 @@ public class FaceEditor {
     }
 
     private static final float HAT_OFFSET_RATIO = 2.8f;
-    private static final float HAT_WIDTH_RATIO = 2.4f;
+    private static final float HAT_WIDTH_RATIO = 2.9f;
     private static final float HAT_HEIGHT_RATIO = 2.4f;
 
     private static PhotoContent addHat(Bitmap hat, FaceDetector.Face face){

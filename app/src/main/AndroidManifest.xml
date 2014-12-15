@@ -52,7 +52,7 @@
         <activity
             android:name=".MoveContent"
             android:label="@string/title_activity_move_content"
-            >
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
