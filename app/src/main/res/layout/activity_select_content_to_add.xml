@@ -32,7 +32,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="+"
                 android:layout_marginLeft="30dp"
                 android:id="@+id/addGlassesButton"
                 android:onClick="addGlasses"/>
@@ -94,7 +94,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="+"
                 android:layout_marginLeft="30sp"
                 android:id="@+id/addMoustachesButton"
                 android:onClick="addMoustaches"/>
@@ -155,7 +155,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="+"
                 android:layout_marginLeft="30dp"
                 android:id="@+id/addHatsButton"
                 android:onClick="addHats"/>
