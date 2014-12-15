@@ -11,5 +11,8 @@
     <string name="app_folder_name">PhotoEditor</string>
     <string name="title_activity_gallery">Gallery</string>
     <string name="title_activity_zoom_photo">ZoomPhoto</string>
+    <string name="title_activity_move_content">MoveContent</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

@@ -4,13 +4,15 @@ import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import projekt_android.photoeditor.content.PhotoContent;
 
 /**
  * Created by Alek on 2014-12-10.
@@ -20,6 +22,16 @@ public class PhotoEditorApp extends Application {
 
     private Bitmap preEditedPhoto;
     private Bitmap editedPhoto;
+
+    public ArrayList<PhotoContent> getPhotoContents() {
+        return photoContents;
+    }
+
+    public void setPhotoContents(ArrayList<PhotoContent> photoContents) {
+        this.photoContents = photoContents;
+    }
+
+    private ArrayList<PhotoContent> photoContents;
 
     public Bitmap getEditedPhoto() {
         return editedPhoto;
@@ -115,3 +127,4 @@ public class PhotoEditorApp extends Application {
         return result;
     }
 }
+

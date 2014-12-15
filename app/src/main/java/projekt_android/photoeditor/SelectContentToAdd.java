@@ -20,8 +20,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
+import projekt_android.photoeditor.content.PhotoContent;
 import projekt_android.photoeditor.database.GlassesDataSource;
 import projekt_android.photoeditor.database.HatsDataSource;
 import projekt_android.photoeditor.database.MoustachesDataSource;
@@ -63,9 +65,9 @@ public class SelectContentToAdd extends Activity {
         Bitmap [] hats = getSelectedHats();
         Bitmap [] glasses = getSelectedGlasses();
 
-        Bitmap editedBitmap = FaceEditor.editBitmap(photoToEdit, moustaches, hats, glasses);
+        ArrayList<PhotoContent> addedContent = FaceEditor.editBitmap(photoToEdit, moustaches, hats, glasses);
 
-        photoEditorApp.setEditedPhoto(editedBitmap);
+        photoEditorApp.setPhotoContents(addedContent);
     }
 
     private Bitmap[] getSelectedMoustaches(){
@@ -229,7 +231,8 @@ public class SelectContentToAdd extends Activity {
     // GO TO NEXT ACTIVITY
     public void startImageConfirmal(View view){
         editPhoto();
-        Intent intent = new Intent(this, PhotoEditionConfirmal.class);
+        //Intent intent = new Intent(this, PhotoEditionConfirmal.class);
+        Intent intent = new Intent(this, MoveContent.class);
         startActivity(intent);
     }
 
