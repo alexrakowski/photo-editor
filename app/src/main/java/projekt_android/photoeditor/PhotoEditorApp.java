@@ -22,16 +22,15 @@ public class PhotoEditorApp extends Application {
 
     private Bitmap preEditedPhoto;
     private Bitmap editedPhoto;
+    private ArrayList<PhotoContent> photoContents;
 
     public ArrayList<PhotoContent> getPhotoContents() {
-        return photoContents;
+        return photoContents != null ? photoContents : new ArrayList<PhotoContent>();
     }
 
     public void setPhotoContents(ArrayList<PhotoContent> photoContents) {
         this.photoContents = photoContents;
     }
-
-    private ArrayList<PhotoContent> photoContents;
 
     public Bitmap getEditedPhoto() {
         return editedPhoto;
