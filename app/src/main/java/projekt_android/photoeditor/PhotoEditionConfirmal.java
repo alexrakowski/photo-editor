@@ -6,24 +6,34 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.UiLifecycleHelper;
+import com.facebook.android.Util;
+import com.facebook.widget.FacebookDialog;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import projekt_android.photoeditor.database.GalleryDataSource;
 import projekt_android.photoeditor.database.ImageDataSource;
 
 
 public class PhotoEditionConfirmal extends Activity {
+
     private Bitmap editedImage;
 
     private GalleryDataSource dataSource;
+
+    private UiLifecycleHelper uiHelper;
 
     /**
      * adds the edited photo to Gallery, and saves to internal storage
@@ -62,11 +72,29 @@ public class PhotoEditionConfirmal extends Activity {
                 Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
         sendBroadcast(scanFileIntent);
     }
+
+    public void shareOnFacebook(View view) {
+        if (FacebookDialog.canPresentShareDialog(getApplicationContext(), FacebookDialog.ShareDialogFeature.PHOTOS)) {
+            List<Bitmap> photo = new ArrayList<Bitmap>();
+            photo.add(editedImage);
+            FacebookDialog shareDialog = new FacebookDialog
+                    .PhotoShareDialogBuilder(this)
+                    .addPhotos(photo)
+                    .build();
+            uiHelper.trackPendingDialogCall(shareDialog.present());
+        } else {
+            Utils.showShortToast(getApplicationContext(), "Can't display 'share on Facebook' dialog");
+        }
+    }
+
     /////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_edition_confirmal);
+
+        this.uiHelper = new UiLifecycleHelper(this, null);
+        uiHelper.onCreate(savedInstanceState);
 
         PhotoEditorApp photoEditorApp = ((PhotoEditorApp)getApplicationContext());
         editedImage = photoEditorApp.getEditedPhoto();
@@ -82,6 +110,42 @@ public class PhotoEditionConfirmal extends Activity {
     protected  void onDestroy(){
         super.onDestroy();
         dataSource.close();
+        uiHelper.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uiHelper.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        uiHelper.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        uiHelper.onPause();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
+            @Override
+            public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
+                Log.e(PhotoEditionConfirmal.class.getName(), String.format("Error: %s", error.toString()));
+            }
+
+            @Override
+            public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
+                Log.i(PhotoEditionConfirmal.class.getName(), "Facebook share success");
+            }
+        });
     }
 
 
@@ -103,4 +167,5 @@ public class PhotoEditionConfirmal extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
