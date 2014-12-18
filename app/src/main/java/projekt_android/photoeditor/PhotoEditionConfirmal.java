@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.facebook.UiLifecycleHelper;
-import com.facebook.android.Util;
 import com.facebook.widget.FacebookDialog;
 
 import java.io.File;
@@ -24,7 +21,6 @@ import java.util.Date;
 import java.util.List;
 
 import projekt_android.photoeditor.database.GalleryDataSource;
-import projekt_android.photoeditor.database.ImageDataSource;
 
 
 public class PhotoEditionConfirmal extends Activity {

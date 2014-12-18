@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -22,6 +21,10 @@ public class GalleryImageAdapter extends BaseAdapter {
     private List<String> urls;
     private Context context;
     private static int cellWidth;
+
+    public List<String> getUrls() {
+        return urls;
+    }
 
     public GalleryImageAdapter(List<String> urls, Context context, int width) {
         filterAndSetUrls(urls);

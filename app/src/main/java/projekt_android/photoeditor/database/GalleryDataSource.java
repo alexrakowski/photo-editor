@@ -1,6 +1,5 @@
 package projekt_android.photoeditor.database;
 
-import android.content.ContentValues;
 import android.content.Context;
 
 /**
