@@ -17,7 +17,7 @@ import projekt_android.photoeditor.database.GalleryDataSource;
 
 
 public class Gallery extends Activity {
-
+    private static final int GRID_VIEW_NUM_COLUMNS = 3;
     GalleryDataSource dataSource;
 
     @Override
@@ -33,6 +33,7 @@ public class Gallery extends Activity {
         Log.i(Gallery.class.getName(), "Urls obtained");
         GridView grid = (GridView)findViewById(R.id.galleryGridView);
 
+        grid.setNumColumns(GRID_VIEW_NUM_COLUMNS);
         grid.setAdapter(new GalleryImageAdapter(urls, this));
     }
 

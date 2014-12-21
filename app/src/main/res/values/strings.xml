@@ -2,14 +2,18 @@
 <resources>
 
     <string name="app_name">PhotoEditor</string>
+    <string name="facebook_content_provider">com.facebook.app.NativeAppCallContentProviderPhotoEditor</string>
     <string name="action_settings">Settings</string>
     <string name="select_picture">Tap to select picture</string>
     <string name="title_activity_select_content_to_add">SelectContentToAdd</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_photo_edition_confirmal">PhotoEditionConfirmal</string>
+    <string name="save_the_photo">Save this Photo</string>
     <string name="saved_photo_description">PhotoEditor</string>
     <string name="app_folder_name">PhotoEditor</string>
     <string name="title_activity_gallery">Gallery</string>
     <string name="title_activity_zoom_photo">ZoomPhoto</string>
+    <string name="title_activity_move_content">MoveContent</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
