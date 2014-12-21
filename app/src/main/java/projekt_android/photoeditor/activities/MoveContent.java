@@ -1,19 +1,22 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.app.Activity;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import projekt_android.photoeditor.content.PhotoContent;
+import projekt_android.photoeditor.views.MovableImageView;
+import projekt_android.photoeditor.views.ParentImageView;
+import projekt_android.photoeditor.PhotoEditorApp;
+import projekt_android.photoeditor.R;
+import projekt_android.photoeditor.Utils;
+import projekt_android.photoeditor.face_editing.PhotoContent;
 
 
 public class MoveContent extends Activity {
@@ -41,7 +44,7 @@ public class MoveContent extends Activity {
             dx = layoutParams.leftMargin * ((float)preEditedPhoto.getWidth() / mainImageView.getWidth());
             dy = layoutParams.topMargin  * ((float)preEditedPhoto.getHeight() / mainImageView.getHeight());
 
-            editedPhoto = Utils.overlayBitmaps(editedPhoto, contentBitmap, (int)dx, (int)dy);
+            editedPhoto = Utils.overlayBitmaps(editedPhoto, contentBitmap, (int) dx, (int) dy);
         }
 
         photoEditorApp.setEditedPhoto(editedPhoto);

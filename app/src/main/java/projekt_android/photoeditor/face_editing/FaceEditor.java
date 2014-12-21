@@ -1,4 +1,4 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.face_editing;
 
 import android.graphics.Bitmap;
 import android.graphics.PointF;
@@ -7,7 +7,8 @@ import android.media.FaceDetector;
 import java.util.ArrayList;
 import java.util.Random;
 
-import projekt_android.photoeditor.content.PhotoContent;
+import projekt_android.photoeditor.Utils;
+import projekt_android.photoeditor.face_editing.PhotoContent;
 
 public class FaceEditor {
     private final static int MAX_FACES = 3;

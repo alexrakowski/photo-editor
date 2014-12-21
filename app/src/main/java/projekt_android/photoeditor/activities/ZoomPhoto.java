@@ -1,4 +1,4 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import java.io.File;
+
+import projekt_android.photoeditor.R;
 
 
 public class ZoomPhoto extends Activity {

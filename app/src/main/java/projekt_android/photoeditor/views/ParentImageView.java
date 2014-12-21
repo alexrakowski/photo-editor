@@ -1,10 +1,12 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+
+import projekt_android.photoeditor.views.MovableImageView;
 
 /**
  * Created by Alek on 2014-12-15.

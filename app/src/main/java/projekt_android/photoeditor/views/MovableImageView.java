@@ -1,4 +1,4 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import projekt_android.photoeditor.content.PhotoContent;
+import projekt_android.photoeditor.face_editing.PhotoContent;
 
 /**
  * Created by Alek on 2014-12-15.

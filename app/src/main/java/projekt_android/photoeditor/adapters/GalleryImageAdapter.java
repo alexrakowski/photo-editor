@@ -1,4 +1,4 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +7,13 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import projekt_android.photoeditor.activities.ZoomPhoto;
 
 /**
  * Created by Piotrek on 2014-12-11.

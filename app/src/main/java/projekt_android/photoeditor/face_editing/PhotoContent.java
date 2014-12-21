@@ -1,4 +1,4 @@
-package projekt_android.photoeditor.content;
+package projekt_android.photoeditor.face_editing;
 
 import android.graphics.Bitmap;
 import android.graphics.PointF;

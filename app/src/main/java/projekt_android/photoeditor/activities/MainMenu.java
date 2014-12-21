@@ -1,25 +1,22 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.FaceDetector;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import projekt_android.photoeditor.face_editing.FaceEditor;
+import projekt_android.photoeditor.PhotoEditorApp;
+import projekt_android.photoeditor.R;
+import projekt_android.photoeditor.Utils;
 
 
 public class MainMenu extends Activity {
@@ -33,6 +30,27 @@ public class MainMenu extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        if (savedInstanceState != null) {
+            this.selectedImagePath = savedInstanceState.getString(getString(R.string.selected_image_path_KEY));
+            setSelectedImage(selectedImagePath);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(getString(R.string.selected_image_path_KEY), selectedImagePath);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            this.selectedImagePath = savedInstanceState.getString(getString(R.string.selected_image_path_KEY));
+            setSelectedImage(selectedImagePath);
+        }
     }
 
     @Override
@@ -86,11 +104,7 @@ public class MainMenu extends Activity {
                 case SELECT_IMAGE_CODE:
                     Uri selectedImageUri = data.getData();
                     selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
-
-                    selectedImage = Utils.decodeSampledBitmapFromFile(selectedImagePath, imageView.getWidth(), imageView.getHeight());
-                    selectedImage = Utils.fixRotation(selectedImagePath, selectedImage);
-
-                    imageView.setImageBitmap(selectedImage);
+                    setSelectedImage(selectedImagePath);
                     break;
                 case CAMERA_REQUEST_CODE:
                     selectedImage = (Bitmap) data.getExtras().get("data");
@@ -99,6 +113,13 @@ public class MainMenu extends Activity {
                     break;
             }
         }
+    }
+
+    private void setSelectedImage(String imagePath) {
+        ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
+        selectedImage = Utils.decodeSampledBitmapFromFile(imagePath, imageView.getWidth(), imageView.getHeight());
+        selectedImage = Utils.fixRotation(selectedImagePath, selectedImage);
+        imageView.setImageBitmap(selectedImage);
     }
 
     private void selectImageFromCamera() {
@@ -115,9 +136,9 @@ public class MainMenu extends Activity {
 
     // GO TO NEXT ACTIVITY
     public void startImageEditing(View view) {
-        if (selectedImage == null){
+        if (selectedImage == null) {
             Utils.showShortToast(getApplicationContext(), "Please choose an image");
-        }else {
+        } else {
             if (FaceEditor.getFacesFromImage(selectedImage) == null) {
                 Utils.showShortToast(getApplicationContext(), "Found no faces on this image");
             } else {

@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import projekt_android.photoeditor.content.PhotoContent;
+import projekt_android.photoeditor.face_editing.PhotoContent;
 
 /**
  * Created by Alek on 2014-12-10.
