@@ -1,12 +1,10 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -23,7 +20,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import projekt_android.photoeditor.content.PhotoContent;
+import projekt_android.photoeditor.face_editing.FaceEditor;
+import projekt_android.photoeditor.PhotoEditorApp;
+import projekt_android.photoeditor.R;
+import projekt_android.photoeditor.Utils;
+import projekt_android.photoeditor.face_editing.PhotoContent;
 import projekt_android.photoeditor.database.GlassesDataSource;
 import projekt_android.photoeditor.database.HatsDataSource;
 import projekt_android.photoeditor.database.MoustachesDataSource;
@@ -173,21 +174,29 @@ public class SelectContentToAdd extends Activity {
         ImageView view = new ImageView(this);
         File imageFile = new File(url);
         if (imageFile.exists()) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            view.setImageBitmap(bitmap);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 45);
-            params.setMargins(8,8,8,8);
-            view.setPadding(4,4,4,4);
-            view.setLayoutParams(params);
-            view.setAdjustViewBounds(true);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    imageClick(view);
-                }
-            });
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
 
-            layout.addView(view);
+                view.setImageBitmap(bitmap);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 45);
+                params.setMargins(8, 8, 8, 8);
+                view.setPadding(4, 4, 4, 4);
+                view.setLayoutParams(params);
+                view.setAdjustViewBounds(true);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imageClick(view);
+                    }
+                });
+
+                layout.addView(view);
+            }
+            catch (Exception e)
+            {
+                Utils.showShortToast(getApplicationContext(), "Encountered an exception while loading image " + imageFile.getAbsolutePath());
+                Utils.showShortToast(getApplicationContext(),e.getMessage());
+            }
         }
     }
 

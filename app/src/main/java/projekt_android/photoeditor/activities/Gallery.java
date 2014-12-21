@@ -1,18 +1,16 @@
-package projekt_android.photoeditor;
+package projekt_android.photoeditor.activities;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
-import android.widget.ImageView;
 
-import java.io.File;
 import java.util.List;
 
+import projekt_android.photoeditor.adapters.GalleryImageAdapter;
+import projekt_android.photoeditor.R;
 import projekt_android.photoeditor.database.GalleryDataSource;
 
 

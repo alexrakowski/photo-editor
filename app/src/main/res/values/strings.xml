@@ -15,5 +15,6 @@
     <string name="title_activity_move_content">MoveContent</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="selected_image_path_KEY">selectedImagePath</string>
 
 </resources>
