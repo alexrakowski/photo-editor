@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -74,7 +75,7 @@ public class MainMenu extends Activity {
 
     // METHODS FOR SELECTING A PICTURE
     public void showImageSelectionDialog(View view) {
-        String[] imageSelectionOptions = {"Select from Gallery", "Use the Camera"};
+        String[] imageSelectionOptions = {"Select from Gallery", "Use the Camera", "Use the default image"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Source for the image:")
                 .setItems(imageSelectionOptions, new DialogInterface.OnClickListener() {
@@ -87,6 +88,9 @@ public class MainMenu extends Activity {
                                 break;
                             case 1:
                                 selectImageFromCamera();
+                                break;
+                            case 2:
+                                selectDefaultImage();
                                 break;
                         }
                     }
@@ -132,6 +136,14 @@ public class MainMenu extends Activity {
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(gallery, SELECT_IMAGE_CODE);
+    }
+
+    private void selectDefaultImage(){
+        // for testing purposes
+        ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
+
+        selectedImage = Utils.decodeSampledBitmapFromResource(getResources(), R.drawable.pavlo, imageView.getWidth(), imageView.getHeight());
+        imageView.setImageBitmap(selectedImage);
     }
 
     // GO TO NEXT ACTIVITY

@@ -170,7 +170,7 @@ public class SelectContentToAdd extends Activity {
         selectImageFromMemory(SELECT_HATS_CODE);
     }
 
-    public void addImgToLayout (String url, LinearLayout layout) {
+    public void addImgToLayout (String url, LinearLayout layout, Object tag) {
         ImageView view = new ImageView(this);
         File imageFile = new File(url);
         if (imageFile.exists()) {
@@ -189,6 +189,7 @@ public class SelectContentToAdd extends Activity {
                         imageClick(view);
                     }
                 });
+                view.setTag(tag);
 
                 layout.addView(view);
             }
@@ -215,21 +216,21 @@ public class SelectContentToAdd extends Activity {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     glassesSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.glassesLayout));
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.glassesLayout), "glasses");
                     break;
                 }
                 case(SELECT_MOUSTACHES_CODE) : {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     moustachesSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.moustachesLayout));
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.moustachesLayout), "moustache");
                     break;
                 }
                 case(SELECT_HATS_CODE) : {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     hatsSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.hatsLayout));
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.hatsLayout), "hat");
                     break;
                 }
             }
@@ -264,13 +265,13 @@ public class SelectContentToAdd extends Activity {
         List<String> hatsUrls = hatsSource.getAllUrls();
 
         for(String url : glassesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout));
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout), "glasses");
         }
         for(String url : hatsUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout));
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout), "moustache");
         }
         for(String url : moustachesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout));
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout), "hat");
         }
     }
 

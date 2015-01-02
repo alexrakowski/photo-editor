@@ -56,6 +56,11 @@ public class PhotoEditionConfirmal extends Activity {
         Utils.showShortToast(getApplicationContext(), resultMessage);
     }
 
+    public void returnToMainMenu(View view){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
     private String getTimeStampFileName(){
         String fileName = "PH_";
         fileName += new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

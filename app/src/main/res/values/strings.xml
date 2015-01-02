@@ -16,5 +16,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="selected_image_path_KEY">selectedImagePath</string>
+    <string name="return_to_main_menu">Return to Main Menu</string>
 
 </resources>

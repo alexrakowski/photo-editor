@@ -3,6 +3,7 @@ package projekt_android.photoeditor;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class Utils {
@@ -98,6 +100,17 @@ public class Utils {
         return BitmapFactory.decodeFile(path, options);
     }
 
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int id, int reqWidth, int reqHeight) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, id, options);
+        options.inSampleSize = Utils.calculateInSampleSize(options, reqWidth, reqHeight);
+
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, id, options);
+    }
+
     public static String getPath(Uri uri, ContentResolver resolver) {
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
@@ -109,7 +122,7 @@ public class Utils {
     }
 
     public static Bitmap overlayBitmaps(Bitmap bmp1, Bitmap bmp2, float dx, float dh) {
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Bitmap bmOverlay = bmp1;//Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
         Canvas canvas = new Canvas(bmOverlay);
         canvas.drawBitmap(bmp1, new Matrix(), null);
         canvas.drawBitmap(bmp2, dx, dh, null);

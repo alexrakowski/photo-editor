@@ -22,7 +22,7 @@
         android:id="@+id/saveEditedPhotoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/returnToMainMenuButton"
         android:onClick="saveEditedPhoto"
         android:text="@string/save_the_photo" />
 
@@ -36,5 +36,14 @@
         android:layout_centerHorizontal="true"
         android:onClick="shareOnFacebook"
         />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/return_to_main_menu"
+        android:id="@+id/returnToMainMenuButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="returnToMainMenu"/>
 
 </RelativeLayout>
