@@ -1,0 +1,50 @@
+start_test_server_in_background
+touch(query("imageview").first)
+reinstall_apps
+start_test_server_in_background
+start_test_server_in_background
+reinstall_apps
+start_test_server_in_background
+touch(query("imageview").first)
+tap 'Use the default image'
+tap 'Start!'
+query("imageView")
+tap 'I'm ready'
+query("button")
+'
+query("button")
+touch("confirmContentButton"_
+)
+touch("confirmContentButton")
+touch("* id:'confirmContentButton'")
+tap 'Finish'
+reinstall_apps
+start_test_server_in_background
+query("* tag: 'hat'")
+query("imageview")
+reinstall_apps
+reinstall_apps
+reinstall_apps
+start_test_server_in_background
+query("imageview")
+exit
+reinstall_apps
+start_test_server_in_background
+start_test_server_in_background
+reinstall_apps
+start_test_server_in_background
+reinstall_apps
+reinstall_apps
+reinstall_apps
+start_test_server_in_background
+adb kill-server
+start_test_server_in_background
+exit
+reinstall_apps
+start_test_server_in_background
+screenshot_embed
+screenshot_embed
+exit
+start_test_server_in_background
+screenshot_embed
+exit

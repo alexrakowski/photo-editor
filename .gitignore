@@ -8,4 +8,6 @@
 */build
 .classpath
 .project
+/test_servers
+/app
 
