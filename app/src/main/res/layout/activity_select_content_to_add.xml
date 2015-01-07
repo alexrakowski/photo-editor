@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="projekt_android.photoeditor.SelectContentToAdd"
+    tools:context="projekt_android.photoeditor.activities.SelectContentToAdd"
     android:background="@color/background_blue">
 
     <LinearLayout
@@ -32,7 +32,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="+"
                 android:layout_marginLeft="30dp"
                 android:id="@+id/addGlassesButton"
                 android:onClick="addGlasses"/>
@@ -88,14 +88,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="Moustaches:"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
-                android:layout_marginLeft="30dp"
+                android:text="+"
+                android:layout_marginLeft="30sp"
                 android:id="@+id/addMoustachesButton"
                 android:onClick="addMoustaches"/>
 
@@ -155,7 +155,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="+"
                 android:layout_marginLeft="30dp"
                 android:id="@+id/addHatsButton"
                 android:onClick="addHats"/>

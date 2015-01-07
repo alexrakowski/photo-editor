@@ -47,15 +47,6 @@
             android:textStyle="bold"
             android:textSize="40sp"
             android:onClick="startImageEditing"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="3"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="@style/Divider"/>
 
         <Button
             android:layout_width="wrap_content"

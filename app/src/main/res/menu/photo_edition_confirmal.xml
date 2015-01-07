@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="projekt_android.photoeditor.PhotoEditionConfirmal" >
+    tools:context="projekt_android.photoeditor.activities.PhotoEditionConfirmal" >
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
