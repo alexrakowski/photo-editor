@@ -11,9 +11,12 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.facebook.android.Util;
 
 public class Utils {
     public static void showShortToast(Context context, String text){
@@ -61,6 +64,12 @@ public class Utils {
         return bitmap;
     }
 
+    public static void recycleBitmap(Bitmap bitmap){
+        if (bitmap != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD){
+            // we should check if the bitmap can be manually recycled
+            bitmap.recycle();
+        }
+    }
 
     private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -101,20 +110,22 @@ public class Utils {
         return BitmapFactory.decodeFile(path, options);
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int id, int reqWidth, int reqHeight) {
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int id, int reqWidth, int reqHeight, boolean withRgb565) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
         options.inJustDecodeBounds = true;
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
 
+        if (withRgb565)
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
         BitmapFactory.decodeResource(res, id, options);
         options.inSampleSize = Utils.calculateInSampleSize(options, reqWidth, reqHeight);
-        //TODO: sdk version 'if'
-        options.inInputShareable = true;
-        options.inPurgeable = true;
 
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, id, options);
+    }
+
+    public static boolean gingerbreadOrLower(){
+        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD;
     }
 
     public static String getPath(Uri uri, ContentResolver resolver) {

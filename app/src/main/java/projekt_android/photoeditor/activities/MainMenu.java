@@ -26,7 +26,6 @@ public class MainMenu extends Activity {
     private static final int SELECT_IMAGE_CODE = 1;
     private static final int CAMERA_REQUEST_CODE = 2;
     private String selectedImagePath;
-    //private Bitmap selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +36,6 @@ public class MainMenu extends Activity {
             this.selectedImagePath = savedInstanceState.getString(getString(R.string.selected_image_path_KEY));
             setSelectedImage(selectedImagePath);
         }
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        //clearSelectedImage();
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        //clearSelectedImage();
     }
 
     @Override
@@ -117,7 +104,6 @@ public class MainMenu extends Activity {
         if (resultCode == RESULT_OK && (requestCode == SELECT_IMAGE_CODE || requestCode == CAMERA_REQUEST_CODE)) {
             ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
             Bitmap selectedImage;
-            clearSelectedImage();
 
             switch (requestCode) {
                 case SELECT_IMAGE_CODE:
@@ -128,6 +114,7 @@ public class MainMenu extends Activity {
                 case CAMERA_REQUEST_CODE:
                     selectedImage = (Bitmap) data.getExtras().get("data");
                     selectedImage = Utils.rotateBitmap(selectedImage, 90f);
+                    clearSelectedImage();
                     imageView.setImageBitmap(selectedImage);
                     break;
             }
@@ -136,6 +123,8 @@ public class MainMenu extends Activity {
 
     private void setSelectedImage(String imagePath) {
         if (imagePath != null) {
+            clearSelectedImage();
+
             ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
             Bitmap selectedImage = Utils.decodeSampledBitmapFromFile(imagePath, imageView.getWidth(), imageView.getHeight());
             selectedImage = Utils.fixRotation(selectedImagePath, selectedImage);
@@ -144,14 +133,16 @@ public class MainMenu extends Activity {
     }
 
     private void clearSelectedImage(){
-        if (true) { //TODO: sdk if
+        if (Utils.gingerbreadOrLower()) {
             ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
-            Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-            if (bitmap != null){
-                bitmap.recycle();
-                bitmap = null;
+            BitmapDrawable bitmapDrawable = (BitmapDrawable)imageView.getDrawable();
+            if (bitmapDrawable != null) {
+                Bitmap bitmap = (bitmapDrawable).getBitmap();
+                if (bitmap != null) {
+                    bitmap.recycle();
+                    imageView.setImageBitmap(null);
+                }
             }
-            System.gc();
         }
     }
 
@@ -170,8 +161,9 @@ public class MainMenu extends Activity {
     private void selectDefaultImage(){
         // for testing purposes
         ImageView imageView = (ImageView) findViewById(R.id.selectImageImageView);
+        clearSelectedImage();
 
-        Bitmap selectedImage = Utils.decodeSampledBitmapFromResource(getResources(), R.drawable.pavlo, imageView.getWidth(), imageView.getHeight());
+        Bitmap selectedImage = Utils.decodeSampledBitmapFromResource(getResources(), R.drawable.pavlo, imageView.getWidth(), imageView.getHeight(), true);
         imageView.setImageBitmap(selectedImage);
     }
 

@@ -30,7 +30,6 @@ public class FaceEditor {
         FaceDetector fd = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MAX_FACES);
         FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
 
-        //bmp = bmp.copy(Bitmap.Config.RGB_565, false);
         int faces_found_count = fd.findFaces(bmp, faces);
 
         //TODO: change the confidence

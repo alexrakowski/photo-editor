@@ -20,7 +20,6 @@ import projekt_android.photoeditor.face_editing.PhotoContent;
 
 
 public class MoveContent extends Activity {
-    private PhotoEditorApp photoEditorApp;
     private ParentImageView mainImageView;
     private ArrayList<MovableImageView> contentImageViews;
 
@@ -33,6 +32,7 @@ public class MoveContent extends Activity {
     }
 
     private void setEditedBitmap(){
+        PhotoEditorApp photoEditorApp = ((PhotoEditorApp)getApplicationContext());
         Bitmap preEditedPhoto = photoEditorApp.getPreEditedPhoto();
         Bitmap editedPhoto = preEditedPhoto.copy(preEditedPhoto.getConfig(), true);
 
@@ -55,7 +55,7 @@ public class MoveContent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_content);
 
-        photoEditorApp = ((PhotoEditorApp)getApplicationContext());
+        PhotoEditorApp photoEditorApp = ((PhotoEditorApp)getApplicationContext());
         Bitmap editingImage = photoEditorApp.getPreEditedPhoto();
 
         mainImageView = (ParentImageView) findViewById(R.id.moveContentImageView);
@@ -66,6 +66,7 @@ public class MoveContent extends Activity {
 
     private void loadContentImages(){
         contentImageViews = new ArrayList<MovableImageView>();
+        PhotoEditorApp photoEditorApp = ((PhotoEditorApp)getApplicationContext());
         ArrayList<PhotoContent> contents = photoEditorApp.getPhotoContents();
 
         for (PhotoContent content : contents){
