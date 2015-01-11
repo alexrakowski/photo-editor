@@ -15,3 +15,7 @@
 
 .idea/misc.xml
 .idea/misc.xml
+*.index
+*.zip
+*.hprof
+*.gradle

@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -171,27 +173,19 @@ public class SelectContentToAdd extends Activity {
     }
 
     public void addImgToLayout (String url, LinearLayout layout, Object tag) {
-        ImageView view = new ImageView(this);
         File imageFile = new File(url);
         if (imageFile.exists()) {
             try {
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = false;
+                options.inSampleSize = 4;
+                if (true){
+                    //TODO: sdk 'if'
+                    options.inPurgeable = true;
+                    options.inInputShareable = true;
+                }
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-
-                view.setImageBitmap(bitmap);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 45);
-                params.setMargins(8, 8, 8, 8);
-                view.setPadding(4, 4, 4, 4);
-                view.setLayoutParams(params);
-                view.setAdjustViewBounds(true);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        imageClick(view);
-                    }
-                });
-                view.setTag(tag);
-
-                layout.addView(view);
+                addBitmapToLayout(bitmap, layout, tag);
             }
             catch (Exception e)
             {
@@ -199,6 +193,30 @@ public class SelectContentToAdd extends Activity {
                 Utils.showShortToast(getApplicationContext(),e.getMessage());
             }
         }
+    }
+
+    private void addResourceImageToLayout(int id, LinearLayout linearLayout, Object tag){
+        Bitmap bitmap = Utils.decodeSampledBitmapFromResource(getResources(), id, 45, 45);
+        addBitmapToLayout(bitmap, linearLayout, tag);
+    }
+
+    private void addBitmapToLayout(Bitmap bitmap, LinearLayout linearLayout, Object tag){
+        ImageView view = new ImageView(this);
+        view.setImageBitmap(bitmap);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 45);
+        params.setMargins(8, 8, 8, 8);
+        view.setPadding(4, 4, 4, 4);
+        view.setLayoutParams(params);
+        view.setAdjustViewBounds(true);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageClick(view);
+            }
+        });
+        //view.setTag(tag);
+
+        linearLayout.addView(view);
     }
 
     private void selectImageFromMemory(int code) {
@@ -241,16 +259,47 @@ public class SelectContentToAdd extends Activity {
     // GO TO NEXT ACTIVITY
     public void startImageConfirmal(View view){
         editPhoto();
-        //Intent intent = new Intent(this, PhotoEditionConfirmal.class);
         Intent intent = new Intent(this, MoveContent.class);
         startActivity(intent);
+        finish();
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        cleanup();
+    }
+
+    private void cleanup(){
+        unbindDrawables(findViewById(R.id.contentLayout));
+        System.gc();
+    }
+
+    private void unbindDrawables(View view) {
+        if (view.getBackground() != null)
+            view.getBackground().setCallback(null);
+
+        if (view instanceof ImageView) {
+            ImageView imageView = (ImageView) view;
+            Bitmap bitmap = ((BitmapDrawable)((ImageView) view).getDrawable()).getBitmap();
+            bitmap.recycle();
+            imageView.setImageBitmap(null);
+        } else if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++)
+                unbindDrawables(viewGroup.getChildAt(i));
+
+            if (!(view instanceof AdapterView))
+                viewGroup.removeAllViews();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_content_to_add);
+
+        setDefaultContents();
 
         glassesSource = new GlassesDataSource(getApplication());
         glassesSource.open();
@@ -273,6 +322,19 @@ public class SelectContentToAdd extends Activity {
         for(String url : moustachesUrls) {
             addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout), "hat");
         }
+    }
+
+    private void setDefaultContents(){
+        LinearLayout glassesLayout = (LinearLayout) findViewById(R.id.glassesLayout);
+        addResourceImageToLayout(R.drawable.glassesplain1, glassesLayout, "glasses");
+        addResourceImageToLayout(R.drawable.glassessun1, glassesLayout, "glasses");
+        addResourceImageToLayout(R.drawable.glassessun2, glassesLayout, "glasses");
+
+        LinearLayout hatsLayout = (LinearLayout) findViewById(R.id.hatsLayout);
+        addResourceImageToLayout(R.drawable.hat1, hatsLayout, "hat");
+
+        LinearLayout moustachesLayout = (LinearLayout) findViewById(R.id.moustachesLayout);
+        addResourceImageToLayout(R.drawable.moustache1, moustachesLayout, "moustache");
     }
 
     @Override

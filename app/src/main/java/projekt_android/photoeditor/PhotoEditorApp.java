@@ -29,6 +29,9 @@ public class PhotoEditorApp extends Application {
     }
 
     public void setPhotoContents(ArrayList<PhotoContent> photoContents) {
+        if (this.photoContents != null){
+            this.photoContents.clear();
+        }
         this.photoContents = photoContents;
     }
 
@@ -36,6 +39,11 @@ public class PhotoEditorApp extends Application {
         return editedPhoto;
     }
     public void setEditedPhoto(Bitmap editedPhoto) {
+        //TODO: add sdk 'if'
+        if (this.editedPhoto != null) {
+            this.editedPhoto.recycle();
+            this.editedPhoto = null;
+        }
         this.editedPhoto = editedPhoto;
     }
 
@@ -43,6 +51,10 @@ public class PhotoEditorApp extends Application {
         return preEditedPhoto;
     }
     public void setPreEditedPhoto(Bitmap preEditedPhoto) {
+        if (this.preEditedPhoto != null) {
+            this.preEditedPhoto.recycle();
+            this.preEditedPhoto = null;
+        }
         this.preEditedPhoto = preEditedPhoto;
     }
 
