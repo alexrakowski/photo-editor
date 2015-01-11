@@ -93,6 +93,7 @@ public class Utils {
         BitmapFactory.decodeFile(path, options);
 
         // Calculate inSampleSize
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
         // Decode bitmap with inSampleSize set
@@ -104,8 +105,13 @@ public class Utils {
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
         options.inJustDecodeBounds = true;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+
         BitmapFactory.decodeResource(res, id, options);
         options.inSampleSize = Utils.calculateInSampleSize(options, reqWidth, reqHeight);
+        //TODO: sdk version 'if'
+        options.inInputShareable = true;
+        options.inPurgeable = true;
 
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, id, options);
