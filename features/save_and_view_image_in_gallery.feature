@@ -41,7 +41,7 @@ Feature: Show saved Images in Gallery
     Then I tap the 2 view in layout with id "moustachesLayout"
     Then I swipe the view with id "glassesLayout" to the right
     Then I tap the 2 view in layout with id "glassesLayout"
-    Then I tap the 3 view in layout with id "hatsLayout"
+    Then I tap the 2 view in layout with id "hatsLayout"
     Then I press view with id "confirmContentButton"
     Then I wait for the view with id "moveContentImageView" to show up
     Then I tap the text "Finish"
@@ -57,7 +57,7 @@ Feature: Show saved Images in Gallery
     Then I wait for the view with id "moustachesLayout" to show up
     Then I tap the 1 view in layout with id "moustachesLayout"
     Then I tap the 2 view in layout with id "glassesLayout"
-    Then I tap the 3 view in layout with id "hatsLayout"
+    Then I tap the 2 view in layout with id "hatsLayout"
     Then I press view with id "confirmContentButton"
     Then I wait for the view with id "moveContentImageView" to show up
     Then I tap the text "Finish"

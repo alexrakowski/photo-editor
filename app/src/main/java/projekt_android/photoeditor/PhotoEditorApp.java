@@ -39,11 +39,7 @@ public class PhotoEditorApp extends Application {
         return editedPhoto;
     }
     public void setEditedPhoto(Bitmap editedPhoto) {
-        //TODO: add sdk 'if'
-        if (this.editedPhoto != null) {
-            this.editedPhoto.recycle();
-            this.editedPhoto = null;
-        }
+        Utils.recycleBitmap(this.editedPhoto);
         this.editedPhoto = editedPhoto;
     }
 
@@ -51,12 +47,10 @@ public class PhotoEditorApp extends Application {
         return preEditedPhoto;
     }
     public void setPreEditedPhoto(Bitmap preEditedPhoto) {
-        if (this.preEditedPhoto != null) {
-            this.preEditedPhoto.recycle();
-            this.preEditedPhoto = null;
-        }
+        Utils.recycleBitmap(this.preEditedPhoto);
         this.preEditedPhoto = preEditedPhoto;
     }
+
 
     //Files Utils
     private String saveBitmapToInternalStorage(Bitmap bitmapImage, String filename) {

@@ -161,31 +161,28 @@ public class SelectContentToAdd extends Activity {
         Log.i(SelectContentToAdd.class.getName(), "Adding glasses");
         selectImageFromMemory(SELECT_GLASSES_CODE);
     }
-
     public void addMoustaches (View view) {
         Log.i(SelectContentToAdd.class.getName(), "Adding moustaches");
         selectImageFromMemory(SELECT_MOUSTACHES_CODE);
     }
-
     public void addHats(View view) {
         Log.i(SelectContentToAdd.class.getName(), "Adding hats");
         selectImageFromMemory(SELECT_HATS_CODE);
     }
 
-    public void addImgToLayout (String url, LinearLayout layout, Object tag) {
+    public void addImgToLayout (String url, LinearLayout layout) {
         File imageFile = new File(url);
         if (imageFile.exists()) {
             try {
                 final BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = false;
                 options.inSampleSize = 4;
-                if (true){
-                    //TODO: sdk 'if'
+                if (Utils.gingerbreadOrLower()){
                     options.inPurgeable = true;
                     options.inInputShareable = true;
                 }
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                addBitmapToLayout(bitmap, layout, tag);
+                addBitmapToLayout(bitmap, layout);
             }
             catch (Exception e)
             {
@@ -195,15 +192,16 @@ public class SelectContentToAdd extends Activity {
         }
     }
 
-    private void addResourceImageToLayout(int id, LinearLayout linearLayout, Object tag){
-        Bitmap bitmap = Utils.decodeSampledBitmapFromResource(getResources(), id, 45, 45);
-        addBitmapToLayout(bitmap, linearLayout, tag);
+    private void addResourceImageToLayout(int id, LinearLayout linearLayout){
+        int height = 45; //TODO: change hardcoded height
+        Bitmap bitmap = Utils.decodeSampledBitmapFromResource(getResources(), id, height, height, false);
+        addBitmapToLayout(bitmap, linearLayout);
     }
 
-    private void addBitmapToLayout(Bitmap bitmap, LinearLayout linearLayout, Object tag){
+    private void addBitmapToLayout(Bitmap bitmap, LinearLayout linearLayout){
         ImageView view = new ImageView(this);
         view.setImageBitmap(bitmap);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 45);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(8, 8, 8, 8);
         view.setPadding(4, 4, 4, 4);
         view.setLayoutParams(params);
@@ -214,7 +212,6 @@ public class SelectContentToAdd extends Activity {
                 imageClick(view);
             }
         });
-        //view.setTag(tag);
 
         linearLayout.addView(view);
     }
@@ -234,25 +231,24 @@ public class SelectContentToAdd extends Activity {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     glassesSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.glassesLayout), "glasses");
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.glassesLayout));
                     break;
                 }
                 case(SELECT_MOUSTACHES_CODE) : {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     moustachesSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.moustachesLayout), "moustache");
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.moustachesLayout));
                     break;
                 }
                 case(SELECT_HATS_CODE) : {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     hatsSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.hatsLayout), "hat");
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.hatsLayout));
                     break;
                 }
             }
-
         }
     }
 
@@ -271,8 +267,8 @@ public class SelectContentToAdd extends Activity {
     }
 
     private void cleanup(){
-        unbindDrawables(findViewById(R.id.contentLayout));
-        System.gc();
+        if (Utils.gingerbreadOrLower())
+            unbindDrawables(findViewById(R.id.contentLayout));
     }
 
     private void unbindDrawables(View view) {
@@ -314,27 +310,31 @@ public class SelectContentToAdd extends Activity {
         List<String> hatsUrls = hatsSource.getAllUrls();
 
         for(String url : glassesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout), "glasses");
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout));
         }
         for(String url : hatsUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout), "moustache");
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout));
         }
         for(String url : moustachesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout), "hat");
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout));
         }
     }
 
     private void setDefaultContents(){
         LinearLayout glassesLayout = (LinearLayout) findViewById(R.id.glassesLayout);
-        addResourceImageToLayout(R.drawable.glassesplain1, glassesLayout, "glasses");
-        addResourceImageToLayout(R.drawable.glassessun1, glassesLayout, "glasses");
-        addResourceImageToLayout(R.drawable.glassessun2, glassesLayout, "glasses");
+        addResourceImageToLayout(R.drawable.glassesplain1, glassesLayout);
+        addResourceImageToLayout(R.drawable.glassessun1, glassesLayout);
+        addResourceImageToLayout(R.drawable.glassessun2, glassesLayout);
 
         LinearLayout hatsLayout = (LinearLayout) findViewById(R.id.hatsLayout);
-        addResourceImageToLayout(R.drawable.hat1, hatsLayout, "hat");
+        addResourceImageToLayout(R.drawable.hat1, hatsLayout);
+        addResourceImageToLayout(R.drawable.hat2, hatsLayout);
+        addResourceImageToLayout(R.drawable.hat3, hatsLayout);
 
         LinearLayout moustachesLayout = (LinearLayout) findViewById(R.id.moustachesLayout);
-        addResourceImageToLayout(R.drawable.moustache1, moustachesLayout, "moustache");
+        addResourceImageToLayout(R.drawable.moustache1, moustachesLayout);
+        addResourceImageToLayout(R.drawable.moustache2, moustachesLayout);
+        addResourceImageToLayout(R.drawable.moustache3, moustachesLayout);
     }
 
     @Override
