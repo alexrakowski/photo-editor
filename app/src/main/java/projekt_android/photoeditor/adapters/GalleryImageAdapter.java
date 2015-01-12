@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import projekt_android.photoeditor.Utils;
 import projekt_android.photoeditor.activities.ZoomPhoto;
 
 /**
@@ -76,7 +77,7 @@ public class GalleryImageAdapter extends BaseAdapter {
         String url = urls.get(i);
         File imageFile = new File(url);
         if (imageFile.exists()) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            Bitmap bitmap = Utils.decodeSampledBitmapFromFile(imageFile.getAbsolutePath(), 100, 100 );//BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             imageView.setImageBitmap(bitmap);
         }
         imageView.setOnClickListener(new OnImageClickListener(url));
