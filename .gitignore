@@ -25,3 +25,6 @@ app/app.iml
 build.gradle
 facebook/build.gradle
 facebook/facebook.iml
+.irb-history
+app/app.iml
+build.gradle

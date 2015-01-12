@@ -1,5 +1,6 @@
 package projekt_android.photoeditor;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -9,10 +10,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -69,6 +74,40 @@ public class Utils {
             // we should check if the bitmap can be manually recycled
             bitmap.recycle();
         }
+    }
+
+    public static int [] getScreenDimensions(Context context){
+        int [] dimens = new int [2];
+        int width, height, dpi;
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        if (Build.VERSION.SDK_INT >= 13){
+            Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            width = size.x;
+            height = size.y;
+        }else{
+            ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            height = displaymetrics.heightPixels;
+            width = displaymetrics.widthPixels;
+        }
+        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        dpi = displaymetrics.densityDpi;
+        width = width / (dpi );
+        height = height / (dpi );
+
+        dimens[0] = width;
+        dimens[1] = height;
+        return dimens;
+    }
+
+    public static Bitmap makeWidthEven(Bitmap bitmap){
+        if (bitmap.getWidth() % 2 != 0){
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() - 1, bitmap.getHeight(), true);
+        }
+
+        return bitmap;
     }
 
     private static int calculateInSampleSize(

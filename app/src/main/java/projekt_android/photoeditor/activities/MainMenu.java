@@ -175,10 +175,11 @@ public class MainMenu extends Activity {
         if (selectedImage == null) {
             Utils.showShortToast(getApplicationContext(), "Please choose an image");
         } else {
+            // bitmaps passed to FaceDetector class must have an even width
+            selectedImage = Utils.makeWidthEven(selectedImage);
             if (FaceEditor.getFacesFromImage(selectedImage) == null) {
                 Utils.showShortToast(getApplicationContext(), "Found no faces on this image");
             } else {
-
                 //set the photo to edit
                 PhotoEditorApp appContext = ((PhotoEditorApp) getApplicationContext());
                 appContext.setPreEditedPhoto(selectedImage);
