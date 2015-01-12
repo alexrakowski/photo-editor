@@ -32,8 +32,7 @@ public class FaceEditor {
 
         int faces_found_count = fd.findFaces(bmp, faces);
 
-        //TODO: change the confidence
-        if (faces_found_count > 0 ) { //&& faces[0].confidence() > 0.25
+        if (faces_found_count > 0 ) {
             return faces;
         } else {
             return null;

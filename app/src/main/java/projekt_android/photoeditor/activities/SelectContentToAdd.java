@@ -37,6 +37,7 @@ public class SelectContentToAdd extends Activity {
     private static final int SELECT_GLASSES_CODE = 1;
     private static final int SELECT_MOUSTACHES_CODE = 2;
     private static final int SELECT_HATS_CODE = 3;
+    private static final int CONTENT_PX_SIZE = 10;
 
     private GlassesDataSource glassesSource;
     private MoustachesDataSource moustachesSource;
@@ -192,9 +193,8 @@ public class SelectContentToAdd extends Activity {
         }
     }
 
-    private void addResourceImageToLayout(int id, LinearLayout linearLayout){
-        int height = 45; //TODO: change hardcoded height
-        Bitmap bitmap = Utils.decodeSampledBitmapFromResource(getResources(), id, height, height, false);
+    private void addResourceImageToLayout(int id, LinearLayout linearLayout, int size){
+        Bitmap bitmap = Utils.decodeSampledBitmapFromResource(getResources(), id, size, size, false);
         addBitmapToLayout(bitmap, linearLayout);
     }
 
@@ -295,7 +295,7 @@ public class SelectContentToAdd extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_content_to_add);
 
-        setDefaultContents();
+        addDefaultContents();
 
         glassesSource = new GlassesDataSource(getApplication());
         glassesSource.open();
@@ -320,21 +320,26 @@ public class SelectContentToAdd extends Activity {
         }
     }
 
-    private void setDefaultContents(){
+    private void addDefaultContents(){
         LinearLayout glassesLayout = (LinearLayout) findViewById(R.id.glassesLayout);
-        addResourceImageToLayout(R.drawable.glassesplain1, glassesLayout);
-        addResourceImageToLayout(R.drawable.glassessun1, glassesLayout);
-        addResourceImageToLayout(R.drawable.glassessun2, glassesLayout);
+
+        int size;
+        int [] dimens = Utils.getScreenDimensions(this);
+        size = CONTENT_PX_SIZE * dimens[1];
+
+        addResourceImageToLayout(R.drawable.glassesplain1, glassesLayout, size);
+        addResourceImageToLayout(R.drawable.glassessun1, glassesLayout, size);
+        addResourceImageToLayout(R.drawable.glassessun2, glassesLayout, size);
 
         LinearLayout hatsLayout = (LinearLayout) findViewById(R.id.hatsLayout);
-        addResourceImageToLayout(R.drawable.hat1, hatsLayout);
-        addResourceImageToLayout(R.drawable.hat2, hatsLayout);
-        addResourceImageToLayout(R.drawable.hat3, hatsLayout);
+        addResourceImageToLayout(R.drawable.hat1, hatsLayout, size);
+        addResourceImageToLayout(R.drawable.hat2, hatsLayout, size);
+        addResourceImageToLayout(R.drawable.hat3, hatsLayout, size);
 
         LinearLayout moustachesLayout = (LinearLayout) findViewById(R.id.moustachesLayout);
-        addResourceImageToLayout(R.drawable.moustache1, moustachesLayout);
-        addResourceImageToLayout(R.drawable.moustache2, moustachesLayout);
-        addResourceImageToLayout(R.drawable.moustache3, moustachesLayout);
+        addResourceImageToLayout(R.drawable.moustache1, moustachesLayout, size);
+        addResourceImageToLayout(R.drawable.moustache2, moustachesLayout, size);
+        addResourceImageToLayout(R.drawable.moustache3, moustachesLayout, size);
     }
 
     @Override
