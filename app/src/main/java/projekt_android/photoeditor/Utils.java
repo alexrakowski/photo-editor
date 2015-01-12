@@ -1,5 +1,6 @@
 package projekt_android.photoeditor;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -9,11 +10,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.facebook.android.Util;
 
 public class Utils {
     public static void showShortToast(Context context, String text){
@@ -61,6 +69,46 @@ public class Utils {
         return bitmap;
     }
 
+    public static void recycleBitmap(Bitmap bitmap){
+        if (bitmap != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD){
+            // we should check if the bitmap can be manually recycled
+            bitmap.recycle();
+        }
+    }
+
+    public static int [] getScreenDimensions(Context context){
+        int [] dimens = new int [2];
+        int width, height, dpi;
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        if (Build.VERSION.SDK_INT >= 13){
+            Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            width = size.x;
+            height = size.y;
+        }else{
+            ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            height = displaymetrics.heightPixels;
+            width = displaymetrics.widthPixels;
+        }
+        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        dpi = displaymetrics.densityDpi;
+        width = width / (dpi );
+        height = height / (dpi );
+
+        dimens[0] = width;
+        dimens[1] = height;
+        return dimens;
+    }
+
+    public static Bitmap makeWidthEven(Bitmap bitmap){
+        if (bitmap.getWidth() % 2 != 0){
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() - 1, bitmap.getHeight(), true);
+        }
+
+        return bitmap;
+    }
 
     private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -93,6 +141,7 @@ public class Utils {
         BitmapFactory.decodeFile(path, options);
 
         // Calculate inSampleSize
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
         // Decode bitmap with inSampleSize set
@@ -100,15 +149,22 @@ public class Utils {
         return BitmapFactory.decodeFile(path, options);
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int id, int reqWidth, int reqHeight) {
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int id, int reqWidth, int reqHeight, boolean withRgb565) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
         options.inJustDecodeBounds = true;
+
+        if (withRgb565)
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
         BitmapFactory.decodeResource(res, id, options);
         options.inSampleSize = Utils.calculateInSampleSize(options, reqWidth, reqHeight);
 
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, id, options);
+    }
+
+    public static boolean gingerbreadOrLower(){
+        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD;
     }
 
     public static String getPath(Uri uri, ContentResolver resolver) {

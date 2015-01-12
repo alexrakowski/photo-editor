@@ -16,12 +16,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:id="@+id/contentLayout"
         android:weightSum="100">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,39 +44,15 @@
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="20">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/glassesLayout">
+                android:id="@+id/glassesLayout"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/glassesplain1"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/glassessun1"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/glassessun2"/>
 
             </LinearLayout>
 
@@ -83,7 +61,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,39 +82,16 @@
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="20">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/moustachesLayout">
+                android:id="@+id/moustachesLayout"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/moustache1"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/moustache2"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/moustache3"/>
 
             </LinearLayout>
 
@@ -144,7 +100,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,39 +121,16 @@
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="20">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/hatsLayout">
+                android:id="@+id/hatsLayout"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/hat1"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/hat2"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:onClick="imageClick"
-                    android:src="@drawable/hat3"/>
 
             </LinearLayout>
 
@@ -208,7 +142,7 @@
             android:text="I'm ready"
             android:id="@+id/confirmContentButton"
             android:layout_gravity="center_vertical"
-            android:layout_weight="5"
+            android:layout_weight="10"
             android:onClick="startImageConfirmal"/>
     </LinearLayout>
 

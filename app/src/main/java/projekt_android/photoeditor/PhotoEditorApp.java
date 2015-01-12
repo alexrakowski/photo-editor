@@ -29,6 +29,9 @@ public class PhotoEditorApp extends Application {
     }
 
     public void setPhotoContents(ArrayList<PhotoContent> photoContents) {
+        if (this.photoContents != null){
+            this.photoContents.clear();
+        }
         this.photoContents = photoContents;
     }
 
@@ -36,6 +39,7 @@ public class PhotoEditorApp extends Application {
         return editedPhoto;
     }
     public void setEditedPhoto(Bitmap editedPhoto) {
+        Utils.recycleBitmap(this.editedPhoto);
         this.editedPhoto = editedPhoto;
     }
 
@@ -43,8 +47,10 @@ public class PhotoEditorApp extends Application {
         return preEditedPhoto;
     }
     public void setPreEditedPhoto(Bitmap preEditedPhoto) {
+        Utils.recycleBitmap(this.preEditedPhoto);
         this.preEditedPhoto = preEditedPhoto;
     }
+
 
     //Files Utils
     private String saveBitmapToInternalStorage(Bitmap bitmapImage, String filename) {

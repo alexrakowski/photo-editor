@@ -15,3 +15,16 @@
 
 .idea/misc.xml
 .idea/misc.xml
+*.index
+*.zip
+*.hprof
+*.gradle
+.idea/misc.xml
+.irb-history
+app/app.iml
+build.gradle
+facebook/build.gradle
+facebook/facebook.iml
+.irb-history
+app/app.iml
+build.gradle

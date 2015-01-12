@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -35,6 +37,7 @@ public class SelectContentToAdd extends Activity {
     private static final int SELECT_GLASSES_CODE = 1;
     private static final int SELECT_MOUSTACHES_CODE = 2;
     private static final int SELECT_HATS_CODE = 3;
+    private static final int CONTENT_PX_SIZE = 10;
 
     private GlassesDataSource glassesSource;
     private MoustachesDataSource moustachesSource;
@@ -159,39 +162,28 @@ public class SelectContentToAdd extends Activity {
         Log.i(SelectContentToAdd.class.getName(), "Adding glasses");
         selectImageFromMemory(SELECT_GLASSES_CODE);
     }
-
     public void addMoustaches (View view) {
         Log.i(SelectContentToAdd.class.getName(), "Adding moustaches");
         selectImageFromMemory(SELECT_MOUSTACHES_CODE);
     }
-
     public void addHats(View view) {
         Log.i(SelectContentToAdd.class.getName(), "Adding hats");
         selectImageFromMemory(SELECT_HATS_CODE);
     }
 
-    public void addImgToLayout (String url, LinearLayout layout, Object tag) {
-        ImageView view = new ImageView(this);
+    public void addImgToLayout (String url, LinearLayout layout) {
         File imageFile = new File(url);
         if (imageFile.exists()) {
             try {
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = false;
+                options.inSampleSize = 4;
+                if (Utils.gingerbreadOrLower()){
+                    options.inPurgeable = true;
+                    options.inInputShareable = true;
+                }
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-
-                view.setImageBitmap(bitmap);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 45);
-                params.setMargins(8, 8, 8, 8);
-                view.setPadding(4, 4, 4, 4);
-                view.setLayoutParams(params);
-                view.setAdjustViewBounds(true);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        imageClick(view);
-                    }
-                });
-                view.setTag(tag);
-
-                layout.addView(view);
+                addBitmapToLayout(bitmap, layout);
             }
             catch (Exception e)
             {
@@ -199,6 +191,29 @@ public class SelectContentToAdd extends Activity {
                 Utils.showShortToast(getApplicationContext(),e.getMessage());
             }
         }
+    }
+
+    private void addResourceImageToLayout(int id, LinearLayout linearLayout, int size){
+        Bitmap bitmap = Utils.decodeSampledBitmapFromResource(getResources(), id, size, size, false);
+        addBitmapToLayout(bitmap, linearLayout);
+    }
+
+    private void addBitmapToLayout(Bitmap bitmap, LinearLayout linearLayout){
+        ImageView view = new ImageView(this);
+        view.setImageBitmap(bitmap);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(8, 8, 8, 8);
+        view.setPadding(4, 4, 4, 4);
+        view.setLayoutParams(params);
+        view.setAdjustViewBounds(true);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageClick(view);
+            }
+        });
+
+        linearLayout.addView(view);
     }
 
     private void selectImageFromMemory(int code) {
@@ -216,41 +231,71 @@ public class SelectContentToAdd extends Activity {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     glassesSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.glassesLayout), "glasses");
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.glassesLayout));
                     break;
                 }
                 case(SELECT_MOUSTACHES_CODE) : {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     moustachesSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.moustachesLayout), "moustache");
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.moustachesLayout));
                     break;
                 }
                 case(SELECT_HATS_CODE) : {
                     Uri selectedImageUri = data.getData();
                     String selectedImagePath = Utils.getPath(selectedImageUri, getContentResolver());
                     hatsSource.addImage(selectedImagePath);
-                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.hatsLayout), "hat");
+                    addImgToLayout(selectedImagePath, (LinearLayout) findViewById(R.id.hatsLayout));
                     break;
                 }
             }
-
         }
     }
 
     // GO TO NEXT ACTIVITY
     public void startImageConfirmal(View view){
         editPhoto();
-        //Intent intent = new Intent(this, PhotoEditionConfirmal.class);
         Intent intent = new Intent(this, MoveContent.class);
         startActivity(intent);
+        finish();
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        cleanup();
+    }
+
+    private void cleanup(){
+        if (Utils.gingerbreadOrLower())
+            unbindDrawables(findViewById(R.id.contentLayout));
+    }
+
+    private void unbindDrawables(View view) {
+        if (view.getBackground() != null)
+            view.getBackground().setCallback(null);
+
+        if (view instanceof ImageView) {
+            ImageView imageView = (ImageView) view;
+            Bitmap bitmap = ((BitmapDrawable)((ImageView) view).getDrawable()).getBitmap();
+            bitmap.recycle();
+            imageView.setImageBitmap(null);
+        } else if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++)
+                unbindDrawables(viewGroup.getChildAt(i));
+
+            if (!(view instanceof AdapterView))
+                viewGroup.removeAllViews();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_content_to_add);
+
+        addDefaultContents();
 
         glassesSource = new GlassesDataSource(getApplication());
         glassesSource.open();
@@ -265,14 +310,36 @@ public class SelectContentToAdd extends Activity {
         List<String> hatsUrls = hatsSource.getAllUrls();
 
         for(String url : glassesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout), "glasses");
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout));
         }
         for(String url : hatsUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout), "moustache");
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout));
         }
         for(String url : moustachesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout), "hat");
+            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout));
         }
+    }
+
+    private void addDefaultContents(){
+        LinearLayout glassesLayout = (LinearLayout) findViewById(R.id.glassesLayout);
+
+        int size;
+        int [] dimens = Utils.getScreenDimensions(this);
+        size = CONTENT_PX_SIZE * dimens[1];
+
+        addResourceImageToLayout(R.drawable.glassesplain1, glassesLayout, size);
+        addResourceImageToLayout(R.drawable.glassessun1, glassesLayout, size);
+        addResourceImageToLayout(R.drawable.glassessun2, glassesLayout, size);
+
+        LinearLayout hatsLayout = (LinearLayout) findViewById(R.id.hatsLayout);
+        addResourceImageToLayout(R.drawable.hat1, hatsLayout, size);
+        addResourceImageToLayout(R.drawable.hat2, hatsLayout, size);
+        addResourceImageToLayout(R.drawable.hat3, hatsLayout, size);
+
+        LinearLayout moustachesLayout = (LinearLayout) findViewById(R.id.moustachesLayout);
+        addResourceImageToLayout(R.drawable.moustache1, moustachesLayout, size);
+        addResourceImageToLayout(R.drawable.moustache2, moustachesLayout, size);
+        addResourceImageToLayout(R.drawable.moustache3, moustachesLayout, size);
     }
 
     @Override
