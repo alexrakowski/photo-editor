@@ -5,6 +5,9 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 
+import projekt_android.photoeditor.activities.MainMenu;
+import projekt_android.photoeditor.activities.SelectContentToAdd;
+
 /**
  * Created by Piotrek on 2014-12-18.
  */

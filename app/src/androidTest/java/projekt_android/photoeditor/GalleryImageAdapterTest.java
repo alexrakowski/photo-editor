@@ -5,6 +5,8 @@ import android.test.InstrumentationTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
+import projekt_android.photoeditor.adapters.GalleryImageAdapter;
+
 /**
  * Created by Piotrek on 2014-12-18.
  */

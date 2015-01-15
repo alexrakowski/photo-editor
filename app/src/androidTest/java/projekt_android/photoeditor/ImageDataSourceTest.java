@@ -18,7 +18,7 @@ public abstract class ImageDataSourceTest extends InstrumentationTestCase {
 
     private static final String IMAGE2 = "aaaa/bbb/img2.jpg";
 
-    private static final List<String> imageList = new ArrayList<String>();
+    private List<String> imageList = new ArrayList<String>();
 
     private ImageDataSource source;
 
@@ -31,7 +31,7 @@ public abstract class ImageDataSourceTest extends InstrumentationTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        RenamingDelegatingContext context = new RenamingDelegatingContext(getInstrumentation().getContext(), "_test");
+        RenamingDelegatingContext context = new RenamingDelegatingContext(getInstrumentation().getTargetContext(), "_test");
         setNewDataSource(context);
         source.open();
         imageList.add(IMAGE1);
@@ -43,7 +43,7 @@ public abstract class ImageDataSourceTest extends InstrumentationTestCase {
         super.tearDown();
         source.close();
     }
-/*
+
     public void testAddImage() {
         source.addImage(IMAGE1);
     }
@@ -52,10 +52,10 @@ public abstract class ImageDataSourceTest extends InstrumentationTestCase {
         source.addImage(IMAGE1);
         source.addImage(IMAGE2);
         List<String> urls = source.getAllUrls();
-        assertEquals("Databse sould return right number of objectss", imageList.size(), urls.size());
+        assertEquals("Databse should return right number of objects", imageList.size(), urls.size());
         for(String s : imageList){
             assertTrue("Database should contain all files", urls.contains(s));
         }
-    }*/
+    }
 
 }
