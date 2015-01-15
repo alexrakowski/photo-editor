@@ -25,6 +25,10 @@ public class GalleryImageAdapter extends BaseAdapter {
     private Context context;
     private static int cellWidth;
 
+    public List<String> getUrls() {
+        return urls;
+    }
+
     public GalleryImageAdapter(List<String> urls, Context context, int width) {
         filterAndSetUrls(urls);
         this.context = context;
