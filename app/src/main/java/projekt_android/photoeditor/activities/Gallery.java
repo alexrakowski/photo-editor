@@ -16,7 +16,7 @@ import projekt_android.photoeditor.database.GalleryDataSource;
 
 public class Gallery extends Activity {
     private static final int GRID_VIEW_NUM_COLUMNS = 3;
-    GalleryDataSource dataSource;
+    private GalleryDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +39,6 @@ public class Gallery extends Activity {
     public void onDestroy(){
         super.onDestroy();
         dataSource.close();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.gallery, menu);
-        return true;
     }
 
     @Override

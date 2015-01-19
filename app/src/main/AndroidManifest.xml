@@ -64,8 +64,7 @@
         <activity
             android:name=".activities.MoveContent"
             android:label="@string/title_activity_move_content"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
