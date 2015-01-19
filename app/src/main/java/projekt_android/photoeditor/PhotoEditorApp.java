@@ -77,7 +77,7 @@ public class PhotoEditorApp extends Application {
     public String saveBitmapFile(Bitmap bitmap, String filename){
         String path;
         if(isExternalStorageWritable()){
-            File album = getAlbumStorageDir(getApplicationContext(), albumName);
+            File album = getAlbumStorageDir(albumName);
             path = saveBitmapToExternalStorage(bitmap, filename, album);
         }else{
             Log.d("DEBUG", "external storage not writeable");
@@ -86,10 +86,10 @@ public class PhotoEditorApp extends Application {
         return path;
     }
 
-    private File getAlbumStorageDir(Context context, String albumName) {
+    private File getAlbumStorageDir(String nameOfAlbum) {
         // Get the directory for the app's private pictures directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
+                Environment.DIRECTORY_PICTURES), nameOfAlbum);
         if (!file.isDirectory()) {
             //first check if directory is not already created
             if (!file.mkdirs()) {

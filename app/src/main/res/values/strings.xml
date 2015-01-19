@@ -18,5 +18,12 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="selected_image_path_KEY">selectedImagePath</string>
     <string name="return_to_main_menu">Return to Main Menu</string>
+    <string name="finish_editing">Finish</string>
+    <string name="glasses">Glasses:</string>
+    <string name="hats">Hats:</string>
+    <string name="moustaches">Moustaches:</string>
+    <string name="im_ready">I\'m ready</string>
+    <string name="show_gallery">Show Gallery</string>
+    <string name="start">Start!</string>
 
 </resources>

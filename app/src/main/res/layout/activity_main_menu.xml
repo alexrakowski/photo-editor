@@ -1,59 +1,56 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:background="@color/background_blue"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainMenu"
-    android:background="@color/background_blue">
+    android:weightSum="100"
+    tools:context=".MainMenu">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="100">
+        android:layout_height="0dp"
+        android:layout_weight="50">
 
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="50">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:onClick="showImageSelectionDialog"
-                android:id="@+id/selectImageImageView"
-                android:background="@color/image_background"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ab000000"
-                android:textSize="30sp"
-                android:text="@string/select_picture"
-                android:layout_gravity="center"
-                android:textStyle="italic" />
-        </FrameLayout>
-        <Button
+        <ImageView
+            android:id="@+id/selectImageImageView"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:text="Start!"
-            android:id="@+id/convertButton"
-            android:layout_weight="25"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:onClick="startImageEditing"/>
+            android:layout_height="fill_parent"
+            android:background="@color/image_background"
+            android:onClick="showImageSelectionDialog" />
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show Gallery"
-            android:id="@+id/showGalleryButton"
-            android:onClick="showGallery"/>
+            android:layout_gravity="center"
+            android:text="@string/select_picture"
+            android:textColor="#ab000000"
+            android:textSize="30sp"
+            android:textStyle="italic" />
+    </FrameLayout>
 
-    </LinearLayout>
-</RelativeLayout>
+    <Button
+        android:id="@+id/convertButton"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="25"
+        android:onClick="startImageEditing"
+        android:text="@string/start"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/showGalleryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showGallery"
+        android:text="@string/show_gallery" />
+
+</LinearLayout>

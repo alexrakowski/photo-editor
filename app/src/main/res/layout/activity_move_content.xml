@@ -18,7 +18,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Finish"
+        android:text="@string/finish_editing"
         android:id="@+id/finishMovingContentButton"
         android:layout_alignParentBottom="true"
         android:onClick="finishEditing"/>
