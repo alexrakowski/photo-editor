@@ -10,9 +10,6 @@
 .project
 /test_servers
 /app
-
-
-
 .idea/misc.xml
 .idea/misc.xml
 *.index

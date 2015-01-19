@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.facebook.android.Util;
 
+import java.io.InputStream;
+
 public class Utils {
     public static void showShortToast(Context context, String text){
         int duration = Toast.LENGTH_SHORT;
@@ -149,6 +151,22 @@ public class Utils {
         return BitmapFactory.decodeFile(path, options);
     }
 
+    public static Bitmap decodeSampledBitmapFromStream(InputStream inputStream, int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(inputStream, null, options);
+
+        // Calculate inSampleSize
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(inputStream, null, options);
+    }
+
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int id, int reqWidth, int reqHeight, boolean withRgb565) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
 
@@ -173,8 +191,10 @@ public class Utils {
         Cursor cursor = resolver.query(uri, filePathColumn, null, null, null);
         cursor.moveToFirst();
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String path = cursor.getString(columnIndex);
+        cursor.close();
 
-        return cursor.getString(columnIndex);
+        return path;
     }
 
     public static Bitmap overlayBitmaps(Bitmap bmp1, Bitmap bmp2, float dx, float dh) {
