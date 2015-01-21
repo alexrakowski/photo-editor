@@ -46,13 +46,15 @@ public abstract class ImageDataSourceTest extends InstrumentationTestCase {
 
     public void testAddImage() {
         source.addImage(IMAGE1);
+        // no exceptions should be thrown
     }
 
     public void testGetAllUrls() {
-        source.addImage(IMAGE1);
-        source.addImage(IMAGE2);
+        for(String image : imageList) {
+           source.addImage(image);
+        }
         List<String> urls = source.getAllUrls();
-        assertEquals("Databse should return right number of objects", imageList.size(), urls.size());
+        assertEquals("Database should return right number of objects", imageList.size(), urls.size());
         for(String s : imageList){
             assertTrue("Database should contain all files", urls.contains(s));
         }
