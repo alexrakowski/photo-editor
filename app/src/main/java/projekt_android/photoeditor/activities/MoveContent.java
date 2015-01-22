@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -60,13 +59,37 @@ public class MoveContent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_content);
 
+        loadImageWithContents();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if (this.mainImageView == null) {
+            loadImageWithContents();
+        }
+    }
+
+    private void loadImageWithContents(){
+        //convenience method
+
+        loadMainImage();
+        loadContentImages();
+    }
+
+    private void loadMainImage(){
         PhotoEditorApp photoEditorApp = ((PhotoEditorApp)getApplicationContext());
         Bitmap editingImage = photoEditorApp.getPreEditedPhoto();
 
+        if (editingImage == null){
+            // the app process must have been killed -> we are going back to the main menu
+            Intent intent = new Intent(this, MainMenu.class);
+            startActivity(intent);
+            finish();
+        }
+
         mainImageView = (ParentImageView) findViewById(R.id.moveContentImageView);
         mainImageView.setImageBitmap(editingImage);
-
-        loadContentImages();
     }
 
     private void loadContentImages(){
