@@ -253,7 +253,11 @@ public class SelectContentToAdd extends Activity {
 
     // GO TO NEXT ACTIVITY
     public void startImageConfirmal(View view){
-        editPhoto();
+        try {
+            editPhoto();
+        } catch (Exception exc) {
+            Log.w(SelectContentToAdd.class.getName(), "Could not edit the photo");
+        }
         Intent intent = new Intent(this, MoveContent.class);
         startActivity(intent);
         finish();
@@ -304,19 +308,24 @@ public class SelectContentToAdd extends Activity {
         hatsSource.open();
 
         // add images from database
-        List<String> glassesUrls = glassesSource.getAllUrls();
-        List<String> moustachesUrls = moustachesSource.getAllUrls();
-        List<String> hatsUrls = hatsSource.getAllUrls();
+        try {
+            List<String> glassesUrls = glassesSource.getAllUrls();
+            List<String> moustachesUrls = moustachesSource.getAllUrls();
+            List<String> hatsUrls = hatsSource.getAllUrls();
 
-        for(String url : glassesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout));
+            for (String url : glassesUrls) {
+                addImgToLayout(url, (LinearLayout) findViewById(R.id.glassesLayout));
+            }
+            for (String url : hatsUrls) {
+                addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout));
+            }
+            for (String url : moustachesUrls) {
+                addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout));
+            }
+        } catch (Exception exc) {
+            Log.w(SelectContentToAdd.class.getName(), "Could not get items from database");
         }
-        for(String url : hatsUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.hatsLayout));
-        }
-        for(String url : moustachesUrls) {
-            addImgToLayout(url, (LinearLayout) findViewById(R.id.moustachesLayout));
-        }
+
     }
 
     private void addDefaultContents(){

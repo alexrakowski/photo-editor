@@ -82,6 +82,7 @@ public class PhotoEditionConfirmal extends Activity {
             photo.add(editedImage);
             FacebookDialog shareDialog = new FacebookDialog
                     .PhotoShareDialogBuilder(this)
+                    .setApplicationName(getString(R.string.app_name))
                     .addPhotos(photo)
                     .build();
             uiHelper.trackPendingDialogCall(shareDialog.present());
