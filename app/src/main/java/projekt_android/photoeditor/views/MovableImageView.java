@@ -47,6 +47,8 @@ public class MovableImageView extends ImageView {
     }
     public void setPosition(PointF pos){
         this.setPosition(pos.x, pos.y);
+        if (this.photoContent != null)
+            this.photoContent.setPosition(pos);
     }
     public void move(float dx, float dy){
         RelativeLayout.LayoutParams myLayoutParams = (RelativeLayout.LayoutParams) this.getLayoutParams();
