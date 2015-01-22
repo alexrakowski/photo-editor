@@ -56,6 +56,14 @@ public class MovableImageView extends ImageView {
         myLayoutParams.leftMargin = myLayoutParams.leftMargin + (int)dx;
         myLayoutParams.topMargin = myLayoutParams.topMargin + (int)dy;
         this.setLayoutParams(myLayoutParams);
+        moveContent(dx, dy);
+    }
+
+    private void moveContent(float dx, float dy){
+        PointF pos = photoContent.getPosition();
+        pos.x += dx;
+        pos.y += dy;
+        photoContent.setPosition(pos);
     }
     public void move(PointF dPos){
         this.move(dPos.x, dPos.y);
@@ -78,19 +86,16 @@ public class MovableImageView extends ImageView {
             public boolean onTouch(View view, MotionEvent event) {
                 switch (event.getAction()) {
                     case android.view.MotionEvent.ACTION_DOWN:
-                        Log.d("TouchTest", "Touch down");
                         x = event.getX();
                         y = event.getY();
                         break;
                     case android.view.MotionEvent.ACTION_UP:
-                        Log.d("TouchTest", "Touch up");
                         break;
                     case MotionEvent.ACTION_MOVE:
                         float newX = event.getX();
                         float newY = event.getY();
                         float dx = newX - x;
                         float dy = newY - y;
-                        Log.d("TouchTest", "Move " + dy);
                         if (Math.abs(dx) > 0f || Math.abs(dy) > 0) {
                             x = newX;
                             y = newY;

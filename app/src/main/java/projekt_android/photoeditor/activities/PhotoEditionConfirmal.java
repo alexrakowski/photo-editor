@@ -92,6 +92,14 @@ public class PhotoEditionConfirmal extends Activity {
     }
 
     /////////////////////////////////////////////
+    private void loadEditedPhoto(){
+        PhotoEditorApp photoEditorApp = ((PhotoEditorApp)getApplicationContext());
+        editedImage = photoEditorApp.getEditedPhoto();
+
+        ImageView imageView = (ImageView) findViewById(R.id.editedImageImageView);
+        imageView.setImageBitmap(editedImage);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,11 +108,7 @@ public class PhotoEditionConfirmal extends Activity {
         this.uiHelper = new UiLifecycleHelper(this, null);
         uiHelper.onCreate(savedInstanceState);
 
-        PhotoEditorApp photoEditorApp = ((PhotoEditorApp)getApplicationContext());
-        editedImage = photoEditorApp.getEditedPhoto();
-
-        ImageView imageView = (ImageView) findViewById(R.id.editedImageImageView);
-        imageView.setImageBitmap(editedImage);
+        loadEditedPhoto();
 
         dataSource = new GalleryDataSource(getApplication());
         dataSource.open();
@@ -121,6 +125,14 @@ public class PhotoEditionConfirmal extends Activity {
     protected void onResume() {
         super.onResume();
         uiHelper.onResume();
+
+        loadEditedPhoto();
+        if (editedImage == null){
+            // the app process must have been killed -> we are going back to the main menu
+            Intent intent = new Intent(this, MainMenu.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
