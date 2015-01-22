@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,12 @@ public abstract class ImageDataSource {
     }
 
     public void open() {
-        database = helper.getWritableDatabase();
+        try {
+            database = helper.getWritableDatabase();
+        } catch(Exception exc) {
+            Log.w(ImageDataSource.class.getName(), "Could not open database");
+            database = null;
+        }
     }
 
     public void close() {
