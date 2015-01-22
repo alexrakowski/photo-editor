@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +27,11 @@ public class MoveContent extends Activity {
 
     //GO TO NEXT ACTIVITY
     public void finishEditing(View view){
-        setEditedBitmap();
+        try {
+            setEditedBitmap();
+        } catch (Exception exc) {
+            Log.w(MoveContent.class.getName(), "Could not set edited bitmap");
+        }
         Intent intent = new Intent(this, PhotoEditionConfirmal.class);
         startActivity(intent);
     }

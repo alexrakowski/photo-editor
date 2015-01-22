@@ -1,46 +1,50 @@
 package projekt_android.photoeditor;
 
-import android.app.Activity;
-import android.app.Instrumentation;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ActivityUnitTestCase;
+import android.test.UiThreadTest;
 import android.widget.Button;
 
-import projekt_android.photoeditor.activities.MoveContent;
+import projekt_android.photoeditor.activities.MainMenu;
 import projekt_android.photoeditor.activities.SelectContentToAdd;
 
 /**
- * Created by Piotrek on 2014-12-18.
+ * Created by Piotrek on 2015-01-22.
  */
-public class SelectContentToAddTest extends ActivityInstrumentationTestCase2<SelectContentToAdd> {
+public class SelectContentToAddTest extends ActivityUnitTestCase<SelectContentToAdd> {
 
-    private Instrumentation.ActivityMonitor activityMonitor;
+    private Button confirmContentButton;
 
-    private Activity selectContentActivity;
+    private SelectContentToAdd activity;
 
-    private Button readyButton;
-
-    public SelectContentToAddTest(Class<SelectContentToAdd> activityClass) {
-        super(activityClass);
+    public SelectContentToAddTest() {
+        super(SelectContentToAdd.class);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        activityMonitor = getInstrumentation().addMonitor(MoveContent.class.getName(), null, false);
-        selectContentActivity = getActivity();
-        readyButton = (Button)selectContentActivity.findViewById(R.id.confirmContentButton);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                SelectContentToAdd.class);
+        startActivity(intent, null, null);
+        activity = getActivity();
     }
 
-    public void testImReady(){
-        selectContentActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                readyButton.performClick();
-            }
-        });
+    public void testConfirmButtonLayout() {
+        int buttonId = R.id.confirmContentButton;
+        assertNotNull("Button not found", activity.findViewById(buttonId));
+        confirmContentButton = (Button) activity.findViewById(buttonId);
+        assertEquals("Button label is incorrect", "I'm ready", confirmContentButton.getText());
+    }
 
-        MoveContent nextActivity = (MoveContent) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 10);
-        assertNotNull("Should start MoveContent activity", nextActivity);
-        nextActivity.finish();
+    public void testMoveContentIntent() {
+        confirmContentButton = (Button) activity.findViewById(R.id.confirmContentButton);
+        confirmContentButton.performClick();
+
+        Intent triggeredIntent = getStartedActivityIntent();
+        assertNotNull("Intent was null", triggeredIntent);
+
+        assertEquals("Intent should start correct class", "projekt_android.photoeditor.activities.MoveContent", triggeredIntent.getComponent().getClassName());
     }
 }
